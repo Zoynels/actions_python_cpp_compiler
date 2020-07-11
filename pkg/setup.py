@@ -8,7 +8,7 @@ import os, sys, platform
 
 cpython_include = []
 if (os.environ.get("pythonLocation", "") != ""):
-    cpython_library.append(os.path.join(os.environ["pythonLocation"], "include"))
+    cpython_include.append(os.path.join(os.environ["pythonLocation"], "include"))
 elif (sys.version_info[0] == 3) and  (sys.version_info[1] == 7):
     cpython_include.append("../external/cpython_3_7_7/Include/")
     cpython_include.append("../external/cpython_3_7_7/PC/")
