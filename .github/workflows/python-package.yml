@@ -16,7 +16,14 @@ jobs:
       fail-fast: false
       matrix:
         config:
-        - { os: windows-latest, python-version: 3.8, architecture: x64 }
+        - {
+            name: "Windows Latest MSVC, x64", 
+            artifact: "Windows.MSVC.x64.tar.xz",
+            os: windows-latest,
+            python-version: [3.8],
+            architecture: x64
+          }
+
 
     steps:
     - uses: actions/checkout@v2
