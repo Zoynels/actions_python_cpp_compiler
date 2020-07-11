@@ -49,3 +49,9 @@ jobs:
       run: |
         cd pkg
         python setup.py build --build-lib=lib bdist_wheel 
+
+    - name: Upload artifact
+      uses: actions/upload-artifact@v1
+      with:
+        name: dist
+        path: pkg/dist
