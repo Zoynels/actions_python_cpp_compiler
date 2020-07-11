@@ -43,10 +43,6 @@ jobs:
     - name: Display Python version
       run: python -c "import sys; print(sys.version)"
 
-    - name: Run show_info.py
-      run: |
-        python show_info.py
-
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
@@ -55,8 +51,12 @@ jobs:
     - name: Build package (setup.py)
       run: |
         cd pkg
-        python setup.py build --build-lib=lib bdist_wheel 
+        python setup.py build --build-lib=lib bdist_wheel install
         cd ..
+
+    - name: Run show_info.py
+      run: |
+        python show_info.py
 
     - name: Test with pytest
       run: |
