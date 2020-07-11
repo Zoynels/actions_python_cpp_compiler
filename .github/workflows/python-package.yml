@@ -18,12 +18,19 @@ jobs:
       matrix:
         config:
         - {
-            name: "Ubuntu (py38_x64)", 
-            os: ubuntu-latest,
+            name: "macOS (py38_x64)", 
+            os: macos-latest,
             python-version: 3.8,
             architecture: x64,
-            artifact_name: "ubuntu-latest.py38_x64.whl.zip",
+            artifact_name: "macos-latest.py38_x64.whl.zip",
           }
+        #- {
+        #    name: "Ubuntu (py38_x64)", 
+        #    os: ubuntu-latest,
+        #    python-version: 3.8,
+        #    architecture: x64,
+        #    artifact_name: "ubuntu-latest.py38_x64.whl.zip",
+        #  }
         #- {
         #    name: "Windows MSVC (py38_x64)", 
         #    os: windows-latest,
