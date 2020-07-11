@@ -4,7 +4,8 @@
 show = False
 
 print("#" * 100, ": os.walk('./external/')")
-a=[print(os.path.join(dp, f)) for dp, dn, filenames in os.walk("./external/") for f in filenames]
+a=[print(os.path.join(dp, f)) for dp, dn, filenames in os.walk("external/") for f in filenames]
+a=[print(os.path.join(dp, f)) for dp, dn, filenames in os.walk("external/pybind11/") for f in filenames]
 
 
 if show:
