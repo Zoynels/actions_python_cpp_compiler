@@ -51,7 +51,13 @@ jobs:
     - name: Build package (setup.py)
       run: |
         cd pkg
-        python setup.py build --build-lib=lib bdist_wheel install
+        python setup.py build --build-lib=lib bdist_wheel
+        cd ..
+
+    - name: Install package (setup.py)
+      run: |
+        cd pkg
+        python install_dist.py
         cd ..
 
     - name: Run show_info.py
