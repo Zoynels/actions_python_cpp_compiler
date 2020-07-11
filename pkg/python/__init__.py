@@ -22,10 +22,10 @@ def run_tests(fname=None):
     streamdata = child.communicate()[0]
     for x in streamdata.split(b"\n"):
         try:
-            print(x.strip())
+            print(x.decode().strip())
         except:
             try:
-                print(x.decode().strip())
+                print(x.strip())
             except:
                 print(x)
     assert child.returncode == 0
