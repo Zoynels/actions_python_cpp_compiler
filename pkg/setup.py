@@ -61,7 +61,7 @@ if test_mode:
 
 ext_modules = [
     Extension(
-        "actions_pyhon_cpp_compiler.cpp_module_test", # save to 'folder.filename'
+        "actions_python_cpp_compiler.cpp_module_test", # save to 'folder.filename'
         sources=sources, # files to compile (all cpp files in project)
         include_dirs=list(set(cpython_include)) + [
                      "../external/pybind11/include/pybind11/", # instead hard dependency for pybin11 could be used 'pybind11.get_include()' function
@@ -75,14 +75,14 @@ ext_modules = [
 ]
 
 setup(
-    name="actions_pyhon_cpp_compiler",
+    name="actions_python_cpp_compiler",
     version="0.0.1",
     author="Zoynels",
     author_email="zoynels@gmail.com",
-    description="actions_pyhon_cpp_compiler",
+    description="actions_python_cpp_compiler",
     ext_modules=ext_modules,
     #requires=["pybind11"],
-    packages=["actions_pyhon_cpp_compiler"],
-    package_dir = {"actions_pyhon_cpp_compiler": "lib" , "actions_pyhon_cpp_compiler":"python"}
+    packages=["actions_python_cpp_compiler"],
+    package_dir = {"actions_python_cpp_compiler": "lib" , "actions_python_cpp_compiler":"python"}
 
 )
