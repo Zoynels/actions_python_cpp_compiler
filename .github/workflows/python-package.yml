@@ -54,12 +54,11 @@ jobs:
 
     - name: Build package (setup.py)
       run: |
-        cd pkg
-        python setup.py build --build-lib=lib bdist_wheel 
+        python pkg/setup.py build --build-lib=lib bdist_wheel 
 
     - name: Test with pytest
       run: |
-        pytest -vv -r s "pkg/python/test*"
+        pytest -vv -r s "pkg/python/*"
 
     - name: Upload wheel artifact
       uses: actions/upload-artifact@v2
