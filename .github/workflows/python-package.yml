@@ -23,6 +23,13 @@ jobs:
       uses: actions/setup-python@v2
       with:
         python-version: ${{ matrix.python-version }}
+#     env:
+#         pythonLocation: C:\hostedtoolcache\windows\Python\3.8.3\x64
+    - name: Print dir
+      run: |
+        import os;[print(os.path.join(dp, f)) for dp, dn, filenames in os.walk(".") for f in filenames]
+        import os,sys;[print(os.path.join(dp, f)) for dp, dn, filenames in os.walk(os.environ.get("pythonLocation", "")) for f in filenames]
+
     - name: Build Windows Python
       run: |
         cd pkg

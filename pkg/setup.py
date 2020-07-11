@@ -4,11 +4,12 @@
 from setuptools import setup
 from distutils.core import setup, Extension
 
-import sys, platform
+import os, sys, platform
 
 cpython_include = []
-
-if (sys.version_info[0] == 3) and  (sys.version_info[1] == 7):
+if (os.environ.get("pythonLocation", "") != ""):
+    cpython_library.append(os.path.join(os.environ["pythonLocation"], "include"))
+elif (sys.version_info[0] == 3) and  (sys.version_info[1] == 7):
     cpython_include.append("../external/cpython_3_7_7/Include/")
     cpython_include.append("../external/cpython_3_7_7/PC/")
 elif (sys.version_info[0] == 3) and  (sys.version_info[1] == 8):
@@ -18,7 +19,9 @@ elif (sys.version_info[0] == 3) and  (sys.version_info[1] == 8):
     raise NotImplementedError(f"Not implemented on {sys.version_info}")
 
 cpython_library = []
-if sys.platform == "linux" or platform == "linux2":
+if (os.environ.get("pythonLocation", "") != ""):
+    cpython_library.append(os.path.join(os.environ["pythonLocation"], "libs"))
+elif sys.platform == "linux" or platform == "linux2":
     raise NotImplementedError("Not implemented on Linux")
 elif sys.platform == "darwin":
     raise NotImplementedError("Not implemented on OS X")
