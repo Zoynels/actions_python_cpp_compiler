@@ -11,7 +11,7 @@ def get_fname_path(start_path, fname):
     for dp, dn, filenames in os.walk(start_path):
         for f in filenames:
             if str(f).lower() == fname:
-                return dp
+                return os.path.abspath(dp)
 
 
 cpython_include = []
