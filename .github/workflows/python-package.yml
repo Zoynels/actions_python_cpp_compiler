@@ -27,7 +27,7 @@ jobs:
 #         pythonLocation: C:\hostedtoolcache\windows\Python\3.8.3\x64
     - name: Run show_info.py
       run: |
-        import os;print(os.listdir("."))
+        python -c "import os;print(os.listdir('.'))"
         python show_info.py
     - name: Build Windows Python
       run: |
