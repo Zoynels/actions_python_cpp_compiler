@@ -19,11 +19,11 @@ if (os.environ.get("pythonLocation", "") != ""):
     cpython_include.append(get_fname_path(os.path.join(os.environ["pythonLocation"]), "python.h"))
     cpython_include.append(get_fname_path(os.path.join(os.environ["pythonLocation"]), "pyconfig.h"))
 elif (sys.version_info[0] == 3) and  (sys.version_info[1] == 7):
-    cpython_include.append("../external/cpython_3_7_7", "python.h")
-    cpython_include.append("../external/cpython_3_7_7", "pyconfig.h")
+    cpython_include.append(get_fname_path("../external/cpython_3_7_7", "python.h"))
+    cpython_include.append(get_fname_path("../external/cpython_3_7_7", "pyconfig.h"))
 elif (sys.version_info[0] == 3) and  (sys.version_info[1] == 8):
-    cpython_include.append("../external/cpython_3_8_3", "python.h")
-    cpython_include.append("../external/cpython_3_8_3", "pyconfig.h")
+    cpython_include.append(get_fname_path("../external/cpython_3_8_3", "python.h"))
+    cpython_include.append(get_fname_path("../external/cpython_3_8_3", "pyconfig.h"))
 elif (sys.version_info[0] == 3) and  (sys.version_info[1] == 8):
     raise NotImplementedError(f"Not implemented on {sys.version_info}")
 
