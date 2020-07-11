@@ -25,4 +25,5 @@ jobs:
         python-version: ${{ matrix.python-version }}
     - name: Build Windows Python
       run: |
-        pkg/build.bat
+        cd pkg
+        setup.py build --build-lib=lib bdist_wheel 
