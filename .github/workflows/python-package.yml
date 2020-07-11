@@ -11,18 +11,12 @@ on:
 
 jobs:
   build:
-    runs-on: ${ { matrix.config.os } }
+    runs-on: ${{ matrix.config.os }}
     strategy:
       fail-fast: false
       matrix:
         config:
-        - {
-            name: "Windows Latest MSVC, x64", 
-            artifact: "Windows.MSVC.x64.tar.xz",
-            os: windows-latest,
-            python-version: 3.8,
-            architecture: x64
-          }
+        - { os: windows-latest, python-version: 3.8, architecture: x64 }
 
     steps:
     - uses: actions/checkout@v2
