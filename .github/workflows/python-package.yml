@@ -24,20 +24,20 @@ jobs:
             architecture: x64,
             artifact_name: "ubuntu-latest.py38_x64.whl.zip",
           }
-        - {
-            name: "Windows MSVC (py38_x64)", 
-            os: windows-latest,
-            python-version: 3.8,
-            architecture: x64,
-            artifact_name: "windows-latest.py38_x64.whl.zip",
-          }
-        - {
-            name: "Windows MSVC (py38_x86)", 
-            os: windows-latest,
-            python-version: 3.8,
-            architecture: x86,
-            artifact_name: "windows-latest.py38_x86.whl.zip",
-          }
+        #- {
+        #    name: "Windows MSVC (py38_x64)", 
+        #    os: windows-latest,
+        #    python-version: 3.8,
+        #    architecture: x64,
+        #    artifact_name: "windows-latest.py38_x64.whl.zip",
+        #  }
+        #- {
+        #    name: "Windows MSVC (py38_x86)", 
+        #    os: windows-latest,
+        #    python-version: 3.8,
+        #    architecture: x86,
+        #    artifact_name: "windows-latest.py38_x86.whl.zip",
+        #  }
 
     steps:
     - uses: actions/checkout@v2
