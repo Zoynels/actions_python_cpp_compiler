@@ -7,10 +7,12 @@ on:
   push:
     branches: [ master ]
     paths:
+      - '**'
       - '!external/**'
   pull_request:
     branches: [ master ]
     paths:
+      - '**'
       - '!external/**'
 
 
