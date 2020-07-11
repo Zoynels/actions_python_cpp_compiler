@@ -29,12 +29,6 @@ jobs:
         - { name: "macOS (py38_x64)", os: macos-latest, python-version: 3.8, architecture: x64, artifact_name: "macos-latest.py38_x64.whl.zip" }
         - { name: "Ubuntu (py38_x64)", os: ubuntu-latest, python-version: 3.8, architecture: x64, artifact_name: "ubuntu-latest.py38_x64.whl.zip" }
 
-        # python 3.9 (macOS and Ubuntu has no x86 version)
-        - { name: "Windows MSVC (py39_x86)", os: windows-latest, python-version: 3.9, architecture: x86, artifact_name: "windows-latest.py39_x86.whl.zip" }
-        - { name: "Windows MSVC (py39_x64)", os: windows-latest, python-version: 3.9, architecture: x64, artifact_name: "windows-latest.py39_x64.whl.zip" }
-        - { name: "macOS (py39_x64)", os: macos-latest, python-version: 3.9, architecture: x64, artifact_name: "macos-latest.py39_x64.whl.zip" }
-        - { name: "Ubuntu (py39_x64)", os: ubuntu-latest, python-version: 3.9, architecture: x64, artifact_name: "ubuntu-latest.py39_x64.whl.zip" }
-
     steps:
     - uses: actions/checkout@v2
       with:
