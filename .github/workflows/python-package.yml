@@ -11,24 +11,32 @@ on:
 
 jobs:
   build:
+    name: ${{ matrix.config.name }}
     runs-on: ${{ matrix.config.os }}
     strategy:
       fail-fast: false
       matrix:
         config:
         - {
-            name: "Windows Latest MSVC", 
-            artifact_name: "windows.x64.py38.whl.zip",
+            name: "Ubuntu (py38_x64)", 
+            os: ubuntu-latest,
+            python-version: 3.8,
+            architecture: x64
+            artifact_name: "ubuntu-latest.py38_x64.whl.zip",
+          }
+        - {
+            name: "Windows MSVC (py38_x64)", 
             os: windows-latest,
             python-version: 3.8,
             architecture: x64
+            artifact_name: "windows-latest.py38_x64.whl.zip",
           }
         - {
-            name: "Windows Latest MSVC", 
-            artifact_name: "windows.x86.py38.whl.zip",
+            name: "Windows MSVC (py38_x86)", 
             os: windows-latest,
             python-version: 3.8,
             architecture: x86
+            artifact_name: "windows-latest.py38_x86.whl.zip",
           }
 
     steps:
@@ -55,7 +63,7 @@ jobs:
         python -m pip install --upgrade pip
         pip install -U setuptools wheel
 
-    - name: Build Windows Python
+    - name: Build package (setup.py)
       run: |
         cd pkg
         python setup.py build --build-lib=lib bdist_wheel 
