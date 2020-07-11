@@ -16,8 +16,8 @@ def get_fname_path(start_path, fname):
 
 cpython_include = []
 if (os.environ.get("pythonLocation", "") != ""):
-    cpython_include.append(get_fname_path(os.path.join(os.environ["pythonLocation"]), "python.h")
-    cpython_include.append(get_fname_path(os.path.join(os.environ["pythonLocation"]), "pyconfig.h")
+    cpython_include.append(get_fname_path(os.path.join(os.environ["pythonLocation"]), "python.h"))
+    cpython_include.append(get_fname_path(os.path.join(os.environ["pythonLocation"]), "pyconfig.h"))
 elif (sys.version_info[0] == 3) and  (sys.version_info[1] == 7):
     cpython_include.append("../external/cpython_3_7_7", "python.h")
     cpython_include.append("../external/cpython_3_7_7", "pyconfig.h")
@@ -29,8 +29,8 @@ elif (sys.version_info[0] == 3) and  (sys.version_info[1] == 8):
 
 cpython_library = []
 if (os.environ.get("pythonLocation", "") != ""):
-    cpython_include.append(get_fname_path(os.path.join(os.environ["pythonLocation"]), "python3.lib") # for windows
-    cpython_include.append(get_fname_path(os.path.join(os.environ["pythonLocation"]), "libpython3.so") # for linux
+    cpython_include.append(get_fname_path(os.path.join(os.environ["pythonLocation"]), "python3.lib")) # for windows
+    cpython_include.append(get_fname_path(os.path.join(os.environ["pythonLocation"]), "libpython3.so")) # for linux
 elif sys.platform == "linux" or platform == "linux2":
     raise NotImplementedError("Not implemented on Linux")
 elif sys.platform == "darwin":
