@@ -21,21 +21,21 @@ jobs:
             name: "Ubuntu (py38_x64)", 
             os: ubuntu-latest,
             python-version: 3.8,
-            architecture: x64
+            architecture: x64,
             artifact_name: "ubuntu-latest.py38_x64.whl.zip",
           }
         - {
             name: "Windows MSVC (py38_x64)", 
             os: windows-latest,
             python-version: 3.8,
-            architecture: x64
+            architecture: x64,
             artifact_name: "windows-latest.py38_x64.whl.zip",
           }
         - {
             name: "Windows MSVC (py38_x86)", 
             os: windows-latest,
             python-version: 3.8,
-            architecture: x86
+            architecture: x86,
             artifact_name: "windows-latest.py38_x86.whl.zip",
           }
 
@@ -68,7 +68,7 @@ jobs:
         cd pkg
         python setup.py build --build-lib=lib bdist_wheel 
 
-    - name: Upload artifact
+    - name: Upload wheel artifact
       uses: actions/upload-artifact@v2
       with:
         name: ${{ matrix.config.artifact_name }}
