@@ -18,7 +18,7 @@ jobs:
         - {
             name: "Windows Latest MSVC, x64", 
             artifact: "Windows.MSVC.x64.tar.xz",
-            os: windows-latest,
+            os: [windows-latest],
             python-version: [3.8],
             architecture: 'x64'
           }
@@ -35,7 +35,7 @@ jobs:
     - name: Set up Python ${{ matrix.python-version }}
       uses: actions/setup-python@v2
       with:
-        python-version: ${{ matrix.python-version }}
+        python-version: ${{ matrix.config.python-version }}
 
     - name: Run show_info.py
       run: |
