@@ -37,6 +37,13 @@ elif sys.platform == "win32":
         elif (sys.version_info[0] == 3) and  (sys.version_info[1] == 8):
             cpython_library.append("../external/cpython_3_8_3/PCbuild/amd64/")
 
+if sys.platform == "linux" or platform == "linux2":
+    extra_compile_args = ["-std=c++17"]
+elif sys.platform == "darwin":
+    extra_compile_args = ["-std=c++17"]
+elif sys.platform == "win32":
+    extra_compile_args = ["/std:c++17", "/MP", "/WX-", "/W4", "/sdl", "/Zi", "/Ox", "/O2"] # Visual Studio 2019
+
 test_mode = True
 if test_mode:
     sources = ["src/python_onefile.cpp"]
@@ -53,7 +60,7 @@ ext_modules = [
         runtime_library_dirs=[],
         libraries=[],
         language="c++",
-        extra_compile_args=["/std:c++17", "/MP", "/WX-", "/W4", "/sdl", "/Zi", "/Ox", "/O2"], # Visual Studio 2019
+        extra_compile_args=extra_compile_args, 
     ),
 ]
 
