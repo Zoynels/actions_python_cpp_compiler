@@ -6,8 +6,23 @@ name: Python package
 on:
   push:
     branches: [ master ]
+    paths:
+      - '!external/**'
+      - '!docs/**'
+      - '!**.md$'
+      - '!.gitattributes'
+      - '!.gitmodules'
+      - '!.gitmodules'
   pull_request:
     branches: [ master ]
+    paths:
+      - '!external/**'
+      - '!docs/**'
+      - '!**.md$'
+      - '!.gitattributes'
+      - '!.gitmodules'
+      - '!.gitmodules'
+
 
 jobs:
   build:
