@@ -59,7 +59,7 @@ jobs:
 
     - name: Test with pytest
       run: |
-        pytest
+        pytest -vv -capture=tee-sys -r s
 
     - name: Upload wheel artifact
       uses: actions/upload-artifact@v2
@@ -67,4 +67,3 @@ jobs:
         name: ${{ matrix.config.artifact_name }}
         path: pkg/dist/*.whl
 
-"pytest", "-vv", "--capture=tee-sys", "-r", "s"
