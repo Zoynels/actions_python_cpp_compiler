@@ -8,12 +8,22 @@ on:
     branches: [ master ]
     paths:
       - '**'
+      - '!**.md$'
+      - '!.gitattributes'
+      - '!.gitmodules'
+      - '!.gitignore'
       - '!external/**'
+      - '!docs/**'
   pull_request:
     branches: [ master ]
     paths:
       - '**'
+      - '!**.md$'
+      - '!.gitattributes'
+      - '!.gitmodules'
+      - '!.gitignore'
       - '!external/**'
+      - '!docs/**'
 
 
 jobs:
