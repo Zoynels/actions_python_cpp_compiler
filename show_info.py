@@ -1,15 +1,10 @@
 ﻿import os,sys
 
 
-show = True
+show = False
 if show:
      print("#" * 100, ": os.walk('.')")
      a=[print(os.path.join(dp, f)) for dp, dn, filenames in os.walk(".") for f in filenames]
-
-     print("#" * 100, ": os.walk('external')")
-     a=[print(os.path.join(dp, f)) for dp, dn, filenames in os.walk("external") for f in filenames]
-     print("#" * 100, ": os.walk('external/pybind11')")
-     a=[print(os.path.join(dp, f)) for dp, dn, filenames in os.walk("external/pybind11") for f in filenames]
 
 show = False
 if show:
