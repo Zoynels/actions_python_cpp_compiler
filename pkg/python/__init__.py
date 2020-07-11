@@ -18,14 +18,15 @@ def run_tests(fname=None):
         test_files.append(pathlib.Path(__file__).parent / fname)
 
 
-    child = subprocess.Popen(["pytest", "-vv", "--capture=tee-sys", "-r", "s"] + test_files, stdout=subprocess.PIPE)
-    streamdata = child.communicate()[0]
-    for x in streamdata.split(b"\n"):
-        try:
-            print(x.decode().strip())
-        except:
+    child = subprocess.Popen(["pytest", "-vv", "--capture=tee-sys", "-r", "s"] + test_files, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    streamdata = child.communicate()
+    for ch in [streamdata[0].split(b"\n"), streamdata[1].split(b"\n")]:
+        for line in ch:
             try:
-                print(x.strip())
+                print(line.decode().strip())
             except:
-                print(x)
+                try:
+                    print(line.strip())
+                except:
+                    print(line)
     assert child.returncode == 0
