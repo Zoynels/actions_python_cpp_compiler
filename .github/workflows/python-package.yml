@@ -25,8 +25,8 @@ jobs:
 
         # python 3.8 (macOS and Ubuntu has no x86 version)
         #- { name: "macOS (py38_x64)", os: macos-latest, python-version: 3.8, architecture: x64, artifact_name: "macos-latest.py38_x64.whl.zip" }
-        - { name: "Ubuntu (py38_x64)", os: ubuntu-latest, python-version: 3.8, architecture: x64, artifact_name: "ubuntu-latest.py38_x64.whl.zip" }
-        #- { name: "Windows MSVC (py38_x64)", os: windows-latest, python-version: 3.8, architecture: x64, artifact_name: "windows-latest.py38_x64.whl.zip" }
+        #- { name: "Ubuntu (py38_x64)", os: ubuntu-latest, python-version: 3.8, architecture: x64, artifact_name: "ubuntu-latest.py38_x64.whl.zip" }
+        - { name: "Windows MSVC (py38_x64)", os: windows-latest, python-version: 3.8, architecture: x64, artifact_name: "windows-latest.py38_x64.whl.zip" }
         #- { name: "Windows MSVC (py38_x86)", os: windows-latest, python-version: 3.8, architecture: x86, artifact_name: "windows-latest.py38_x86.whl.zip" }
 
     steps:
@@ -54,7 +54,7 @@ jobs:
         python setup.py build --build-lib=lib bdist_wheel
         cd ..
 
-    - name: Install package (setup.py)
+    - name: Install package (dist/*.whl)
       run: |
         cd pkg
         python install_dist.py
