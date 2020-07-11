@@ -15,4 +15,7 @@ def run_tests(fname=None):
     elif (pathlib.Path(__file__).parent / fname).is_file():
         test_files.append(pathlib.Path(__file__).parent / fname)
 
-    subprocess.run(["pytest", "-vv", "--capture=tee-sys", "-r", "s"] + test_files)
+
+    child = subprocess.Popen(["pytest", "-vv", "--capture=tee-sys", "-r", "s"] + test_files, stdout=subprocess.PIPE)
+    streamdata = child.communicate()[0]
+    sys.exit(child.returncode)
