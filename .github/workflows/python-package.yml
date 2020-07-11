@@ -56,10 +56,13 @@ jobs:
       run: |
         cd pkg
         python setup.py build --build-lib=lib bdist_wheel 
+        cd ..
 
     - name: Test with pytest
       run: |
-        pytest -vv -r s "python/*"
+        cd pkg
+        pytest -vv -r s
+        cd ..
 
     - name: Upload wheel artifact
       uses: actions/upload-artifact@v2
