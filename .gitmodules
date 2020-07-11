@@ -1,0 +1,11 @@
+[submodule "cpython_3_8_3"]
+	path = external/cpython_3_8_3
+	url = https://github.com/Zoynels/cpython_builds.git
+	branch = v3.8.3
+[submodule "cpython_3_7_7"]
+	path = external/cpython_3_7_7
+	url = https://github.com/Zoynels/cpython_builds.git
+	branch = v3.7.7
+[submodule "pybind11"]
+	path = external/pybind11
+	url = https://github.com/Zoynels/pybind11.git
