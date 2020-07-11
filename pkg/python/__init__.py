@@ -11,11 +11,11 @@ def run_tests(fname=None):
 
     test_files = []
     if fname is None:
-        test_files.append(pathlib.Path(__file__).parent / "test_ping.py")
+        test_files.append(str(pathlib.Path(__file__).parent / "test_ping.py"))
     elif pathlib.Path(fname).is_file():
-        test_files.append(fname)
+        test_files.append(str(fname))
     elif (pathlib.Path(__file__).parent / fname).is_file():
-        test_files.append(pathlib.Path(__file__).parent / fname)
+        test_files.append(str(pathlib.Path(__file__).parent / fname))
 
 
     child = subprocess.Popen(["pytest", "-vv", "--capture=tee-sys", "-r", "s"] + test_files, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
