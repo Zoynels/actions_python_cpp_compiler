@@ -5,8 +5,10 @@ def echo(value):
     return cpp_module_test.echo(str(value))
 
 def run_tests(fname=None):
-    import subprocess
+    import sys
     import pathlib
+    import subprocess
+
     test_files = []
     if fname is None:
         test_files.append(pathlib.Path(__file__).parent / "test_ping.py")
@@ -18,4 +20,4 @@ def run_tests(fname=None):
 
     child = subprocess.Popen(["pytest", "-vv", "--capture=tee-sys", "-r", "s"] + test_files, stdout=subprocess.PIPE)
     streamdata = child.communicate()[0]
-    sys.exit(child.returncode)
+    assert child.returncode == 0
