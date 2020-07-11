@@ -1,7 +1,7 @@
 ﻿import os,sys
 
 
-show = False
+show = True
 if show:
      print("#" * 100, ": os.walk('.')")
      a=[print(os.path.join(dp, f)) for dp, dn, filenames in os.walk(".") for f in filenames]
