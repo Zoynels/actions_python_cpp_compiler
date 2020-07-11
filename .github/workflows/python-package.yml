@@ -18,17 +18,17 @@ jobs:
         config:
         - {
             name: "Windows Latest MSVC", 
-            artifact: "windows.x64.py38.tar.xz",
+            artifact_name: "windows.x64.py38.whl.zip",
             os: windows-latest,
             python-version: 3.8,
-            architecture: 'x64'
+            architecture: x64
           }
         - {
             name: "Windows Latest MSVC", 
-            artifact: "windows.x86.py38.tar.xz",
+            artifact_name: "windows.x86.py38.whl.zip",
             os: windows-latest,
             python-version: 3.8,
-            architecture: 'x86'
+            architecture: x86
           }
 
     steps:
@@ -40,6 +40,7 @@ jobs:
       uses: actions/setup-python@v2
       with:
         python-version: ${{ matrix.config.python-version }}
+        architecture: ${{ matrix.config.architecture }}
 
     - name: Display Python version
       run: python -c "import sys; print(sys.version)"
@@ -62,5 +63,5 @@ jobs:
     - name: Upload artifact
       uses: actions/upload-artifact@v2
       with:
-        name: ${{ matrix.config.artifact }}
+        name: ${{ matrix.config.artifact_name }}
         path: pkg/dist/*.whl
