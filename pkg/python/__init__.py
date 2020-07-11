@@ -20,6 +20,12 @@ def run_tests(fname=None):
 
     child = subprocess.Popen(["pytest", "-vv", "--capture=tee-sys", "-r", "s"] + test_files, stdout=subprocess.PIPE)
     streamdata = child.communicate()[0]
-    if child.returncode != 0:
-        print(streamdata)
+    for x in streamdata.split(b"\n"):
+        try:
+            print(x.strip())
+        except:
+            try:
+                print(x.decode().strip())
+            except:
+                print(x)
     assert child.returncode == 0
