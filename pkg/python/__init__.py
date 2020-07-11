@@ -4,7 +4,7 @@ __version__ = cpp_module_test.__version__
 def echo(value):
     return cpp_module_test.echo(str(value))
 
-def run_test(fname=None):
+def run_tests(fname=None):
     import subprocess
     import pathlib
     test_files = []

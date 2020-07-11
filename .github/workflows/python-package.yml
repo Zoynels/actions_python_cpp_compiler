@@ -64,7 +64,7 @@ jobs:
       run: |
         python show_info.py
 
-    - name: Test with builtin function
+    - name: Test with builtin test function
       run: |
         python -c "import actions_pyhon_cpp_compiler; actions_pyhon_cpp_compiler.run_tests()"
 
