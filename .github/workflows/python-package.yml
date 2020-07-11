@@ -9,19 +9,19 @@ on:
     paths:
       - '!external/**'
       - '!docs/**'
-      - '!**.md$'
-      - '!.gitattributes'
-      - '!.gitmodules'
-      - '!.gitmodules'
+      - '!*.md$'
+      - '!.gitattributes$'
+      - '!.gitmodules$'
+      - '!.gitignore$'
   pull_request:
     branches: [ master ]
     paths:
       - '!external/**'
       - '!docs/**'
-      - '!**.md$'
-      - '!.gitattributes'
-      - '!.gitmodules'
-      - '!.gitmodules'
+      - '!*.md$'
+      - '!.gitattributes$'
+      - '!.gitmodules$'
+      - '!.gitignore$'
 
 
 jobs:
