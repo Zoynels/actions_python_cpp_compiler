@@ -25,13 +25,9 @@ jobs:
         python-version: ${{ matrix.python-version }}
 #     env:
 #         pythonLocation: C:\hostedtoolcache\windows\Python\3.8.3\x64
-    - name: Print dir 1
+    - name: Run show_info.py
       run: |
-        import os;a=[print(os.path.join(dp, f)) for dp, dn, filenames in os.walk(".") for f in filenames]
-    - name: Print dir 2
-      run: |
-        import os,sys;b=[print(os.path.join(dp, f)) for dp, dn, filenames in os.walk(os.environ.get("pythonLocation", "")) for f in filenames]
-
+        show_info.py
     - name: Build Windows Python
       run: |
         cd pkg
