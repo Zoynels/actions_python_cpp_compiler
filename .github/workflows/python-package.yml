@@ -32,8 +32,8 @@ jobs:
       fail-fast: true # fail-fast: true meant that if one test fail, then all running tests will be canceled
       matrix:
         config:
-        - { name: "Ubuntu (py38_x64)", os: ubuntu-latest, python-version: 3.8, architecture: x64, artifact_name: "ubuntu-latest.py38_x64.whl.zip" }
-        - { name: "macOS (py38_x64)", os: macos-latest, python-version: 3.8, architecture: x64, artifact_name: "macos-latest.py38_x64.whl.zip" }
+        - { name: "Ubuntu (py38_x64)", os: ubuntu-latest, python-version: 3.8, architecture: x64, artifact_name: "ubuntu-latest.py38_x64" }
+        - { name: "macOS (py38_x64)", os: macos-latest, python-version: 3.8, architecture: x64, artifact_name: "macos-latest.py38_x64" }
 
     steps:
     - uses: actions/checkout@v2
@@ -103,6 +103,7 @@ jobs:
       id: upload-release-asset 
       uses: softprops/action-gh-release@v1
       with:
+        tag_name: "test1"
         files: |
             dist/**.whl
         body_path: ${{ github.workflow }}/readme.md
