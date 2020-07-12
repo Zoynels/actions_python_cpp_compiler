@@ -44,7 +44,8 @@ def get_version():
 
 
 def get_fname_path(start_path, fnames):
-    if not isinstance(fnames, list): fnames = [fnames]
+    if not isinstance(fnames, list):
+        fnames = [fnames]
     found_files = []
     for dp, dn, filenames in os.walk(start_path):
         for f in filenames:
@@ -70,7 +71,8 @@ else:
 
 cpython_library = []
 if (os.environ.get("pythonLocation", "") != ""):
-    cpython_include.append(get_fname_path(os.path.join(os.environ["pythonLocation"]), ["python[0-9\.]+.lib", "libpython[0-9\.]+.so", "libpython[0-9\.]+.dylib"]))
+    cpython_include.append(get_fname_path(os.path.join(os.environ["pythonLocation"]), [
+                           r"python[0-9\.]+.lib", r"libpython[0-9\.]+.so", r"libpython[0-9\.]+.dylib"]))
 else:
     raise ValueError("Please set 'pythonLocation' environment variable where Python.h and " +
                      "python3.lib/libpython3.so exist! Files will be searched recursively is this folder.")
