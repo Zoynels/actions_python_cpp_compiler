@@ -38,7 +38,7 @@ jobs:
     name: ${{ matrix.config.name }}
     runs-on: ${{ matrix.config.os }}
     strategy:
-      fail-fast: false # fail-fast: true meant that if one test fail, then all running tests will be canceled
+      fail-fast: true # fail-fast: true meant that if one test fail, then all running tests will be canceled
       matrix:
         config:
         - { name: "Ubuntu (py38_x64)", os: ubuntu-latest, python-version: 3.8, architecture: x64, artifact_name: "ubuntu-latest.py38_x64.zip" }
@@ -81,8 +81,8 @@ jobs:
       run: |
         python -c "import actions_python_cpp_compiler; actions_python_cpp_compiler.run_tests()"
 
-
     - name: Lint with flake8/isort/autopep8_quotes
+      if: ${{ always() }}
       working-directory: pkg
       run: |
         isort --diff .
