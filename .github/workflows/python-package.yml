@@ -33,7 +33,7 @@ jobs:
       matrix:
         config:
         - { name: "Ubuntu (py38_x64)", os: ubuntu-latest, python-version: 3.8, architecture: x64, artifact_name: "ubuntu-latest.py38_x64.zip" }
-        - { name: "macOS (py38_x64)", os: macos-latest, python-version: 3.8, architecture: x64, artifact_name: "macos-latest.py38_x64.zip" }
+        #- { name: "macOS (py38_x64)", os: macos-latest, python-version: 3.8, architecture: x64, artifact_name: "macos-latest.py38_x64.zip" }
 
     steps:
     - uses: actions/checkout@v2
@@ -97,19 +97,14 @@ jobs:
     - name: Download artifacts
       uses: actions/download-artifact@v2
       with:
-        path: pkg/artifacts
+        path: artifacts
  
-    - name: Display structure of downloaded files (pkg/artifacts)
+    - name: Display structure of downloaded files (artifacts)
       run: ls -R
-      working-directory: pkg/artifacts
+      working-directory: artifacts
 
-    - name: Extract artifacts
-      working-directory: pkg
-      run: |
-        python util_funcs.py --func="extractall" --pat="artifacts/**" --extract_to="dist"
-
-    - name: Display structure of downloaded files (pkg)
-      working-directory: pkg
+    - name: Display structure of downloaded files (dist)
+      working-directory: dist
       run: ls -R
 
     - name: Create Release
@@ -117,7 +112,7 @@ jobs:
       with:
         tag_name: "test1"
         files: |
-            pkg/dist/**.whl
+            artifacts/**.whl
         body_path: readme.md
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
