@@ -79,6 +79,7 @@ jobs:
         path: pkg/dist/*.whl
 
   release:
+    if: contains(github.ref, 'tags/v')
     needs: [build_test_ubuntu_py38_x64]
     name: "release"
     runs-on: ubuntu-latest
@@ -106,7 +107,7 @@ jobs:
     - name: Create Release
       uses: softprops/action-gh-release@v1
       with:
-        tag_name: "test1"
+        tag_name: github.ref
         files: |
             artifacts/**/*.whl
         body_path: readme.md
