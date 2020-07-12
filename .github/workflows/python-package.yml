@@ -104,7 +104,7 @@ jobs:
         #- { name: "Windows MSVC (py38_x64)", os: windows-latest, python-version: 3.8, architecture: x64, artifact_name: "windows-latest.py38_x64.whl.zip" }
         #- { name: "macOS (py38_x64)", os: macos-latest, python-version: 3.8, architecture: x64, artifact_name: "macos-latest.py38_x64.whl.zip" }
         # already run in build_test_ubuntu_py38_x64
-        #- { name: "Ubuntu (py38_x64)", os: ubuntu-latest, python-version: 3.8, architecture: x64, artifact_name: "ubuntu-latest.py38_x64.whl.zip" }
+        - { name: "Ubuntu (py38_x64)", os: ubuntu-latest, python-version: 3.8, architecture: x64, artifact_name: "ubuntu-latest.py38_x64.whl.zip" }
 
     steps:
     - uses: actions/checkout@v2
