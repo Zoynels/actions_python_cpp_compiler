@@ -1,6 +1,5 @@
 ﻿name: Python + CPP package
 
-
 on:
   push:
     # if tag "v0.0.1" and branch "master" then workflow will run twice
