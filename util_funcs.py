@@ -69,6 +69,17 @@ def copyfiles(args):
         print(f"Copy file from '{fname}' to '{new_file}'")
         shutil.copyfile(fname, new_file)
 
+def showfiles(args):
+    if str(args.func).lower() != "showfiles":
+        return 0
+
+    if args.pat is None:
+        raise ValueError(f"Unknown 'pat' in args: {args}")
+
+    print("#" * 100)
+    for fname in glob.glob(args.pat, recursive=True):
+        print(fname)
+
 
 parser = argparse.ArgumentParser()
 parser.add_argument("--func", help="function name")
@@ -84,3 +95,6 @@ extractall(args)
 install_dist(args)
 # util_funcs.py --func=copyfiles --pat=artifacts/**/*.whl --dest_to=dist
 copyfiles(args)
+# util_funcs.py --func=showfiles --pat=**/*.whl
+showfiles(args)
+
