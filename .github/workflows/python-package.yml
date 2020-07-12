@@ -32,8 +32,8 @@ jobs:
       fail-fast: true # fail-fast: true meant that if one test fail, then all running tests will be canceled
       matrix:
         config:
-        - { name: "Ubuntu (py38_x64)", os: ubuntu-latest, python-version: 3.8, architecture: x64, artifact_name: "ubuntu-latest.py38_x64.whl.zip" }
-
+        #- { name: "Ubuntu (py38_x64)", os: ubuntu-latest, python-version: 3.8, architecture: x64, artifact_name: "ubuntu-latest.py38_x64.whl.zip" }
+        - { name: "Windows, g++ (py38_x64)", os: windows-latest, python-version: 3.8, architecture: x64, cc: "gcc", cxx: "g++", artifact_name: "windows-latest.gcc.py38_x64.whl.zip" }
     steps:
     - uses: actions/checkout@v2
       with:
@@ -94,15 +94,15 @@ jobs:
       matrix:
         config:
         # python 3.7 (macOS and Ubuntu has no x86 version)
-        - { name: "Windows MSVC (py37_x86)", os: windows-latest, python-version: 3.7, architecture: x86, artifact_name: "windows-latest.py37_x86.whl.zip" }
-        - { name: "Windows MSVC (py37_x64)", os: windows-latest, python-version: 3.7, architecture: x64, artifact_name: "windows-latest.py37_x64.whl.zip" }
-        - { name: "macOS (py37_x64)", os: macos-latest, python-version: 3.7, architecture: x64, artifact_name: "macos-latest.py37_x64.whl.zip" }
-        - { name: "Ubuntu (py37_x64)", os: ubuntu-latest, python-version: 3.7, architecture: x64, artifact_name: "ubuntu-latest.py37_x64.whl.zip" }
+        #- { name: "Windows MSVC (py37_x86)", os: windows-latest, python-version: 3.7, architecture: x86, artifact_name: "windows-latest.py37_x86.whl.zip" }
+        #- { name: "Windows MSVC (py37_x64)", os: windows-latest, python-version: 3.7, architecture: x64, artifact_name: "windows-latest.py37_x64.whl.zip" }
+        #- { name: "macOS (py37_x64)", os: macos-latest, python-version: 3.7, architecture: x64, artifact_name: "macos-latest.py37_x64.whl.zip" }
+        #- { name: "Ubuntu (py37_x64)", os: ubuntu-latest, python-version: 3.7, architecture: x64, artifact_name: "ubuntu-latest.py37_x64.whl.zip" }
 
         # python 3.8 (macOS and Ubuntu has no x86 version)
-        - { name: "Windows MSVC (py38_x86)", os: windows-latest, python-version: 3.8, architecture: x86, artifact_name: "windows-latest.py38_x86.whl.zip" }
-        - { name: "Windows MSVC (py38_x64)", os: windows-latest, python-version: 3.8, architecture: x64, artifact_name: "windows-latest.py38_x64.whl.zip" }
-        - { name: "macOS (py38_x64)", os: macos-latest, python-version: 3.8, architecture: x64, artifact_name: "macos-latest.py38_x64.whl.zip" }
+        #- { name: "Windows MSVC (py38_x86)", os: windows-latest, python-version: 3.8, architecture: x86, artifact_name: "windows-latest.py38_x86.whl.zip" }
+        #- { name: "Windows MSVC (py38_x64)", os: windows-latest, python-version: 3.8, architecture: x64, artifact_name: "windows-latest.py38_x64.whl.zip" }
+        #- { name: "macOS (py38_x64)", os: macos-latest, python-version: 3.8, architecture: x64, artifact_name: "macos-latest.py38_x64.whl.zip" }
         # already run in build_test_ubuntu_py38_x64
         #- { name: "Ubuntu (py38_x64)", os: ubuntu-latest, python-version: 3.8, architecture: x64, artifact_name: "ubuntu-latest.py38_x64.whl.zip" }
 
