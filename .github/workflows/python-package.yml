@@ -3,8 +3,8 @@
 on:
   push:
     branches:
-      - master
       - refs/tags/*
+      - master
     paths:
       - '**'
       - '!**.md'
