@@ -73,11 +73,6 @@ jobs:
       run: |
         python util_funcs.py --func="install_dist" --pat="dist/**/*.whl" --pkg_name="actions_python_cpp_compiler"
 
-    - name: Run show_info.py
-      if: ${{ always() }}
-      run: |
-        python show_info.py
-
     - name: Test with builtin test function
       run: |
         python -c "import actions_python_cpp_compiler; actions_python_cpp_compiler.run_tests()"
