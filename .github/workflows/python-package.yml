@@ -35,7 +35,6 @@ on:
 jobs:
   pre_test_ubuntu:
     # test build only on one config, if all ok, then run same steps on other configs
-    needs: [release]
     name: ${{ matrix.config.name }}
     runs-on: ${{ matrix.config.os }}
     strategy:
