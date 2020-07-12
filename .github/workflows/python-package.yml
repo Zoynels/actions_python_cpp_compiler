@@ -150,14 +150,14 @@ jobs:
 
     - name: Publish package to PyPI
       env:
-        TWINE_USERNAME: ${{ secrets.PYPI_USERNAME }}
-        TWINE_PASSWORD: ${{ secrets.PYPI_PASSWORD }}
+        TWINE_USERNAME: ${{ secrets.PYPI_USERNAME_TOKEN }}
+        TWINE_PASSWORD: ${{ secrets.PYPI_PASSWORD_TOKEN_TEST }}
       run: |
         twine upload --non-interactive --verbose --repository-url https://test.pypi.org/legacy/ dist/*
     #  uses: pypa/gh-action-pypi-publish@master
     #  with:
     #    user: __token__
-    #    password: ${{ secrets.TOKEN_UPLOAD_TEST_PYPI_ORG }}
+    #    password: ${{ secrets.PYPI_PASSWORD_TOKEN_TEST}}
     #    packages_dir: dist/
     #    repository_url: https://test.pypi.org/legacy/
     #    skip_existing: true
