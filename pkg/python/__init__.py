@@ -1,5 +1,6 @@
 ﻿from . import cpp_module_test
-__version__ = cpp_module_test.__version__
+__version_cpp__ = cpp_module_test.__version__
+__version__ = "0.0.1"
 
 def echo(value):
     return cpp_module_test.echo(str(value))
