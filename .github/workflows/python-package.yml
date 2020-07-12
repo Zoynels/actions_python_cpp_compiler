@@ -62,7 +62,7 @@ jobs:
     - name: Install package (dist/*.whl)
       working-directory: pkg
       run: |
-        python util_funcs.py --func=install_dist --pat=dist/**.whl --pkg_name=actions_python_cpp_compiler
+        python util_funcs.py --func="install_dist" --pat="dist/**.whl" --pkg_name="actions_python_cpp_compiler"
 
     - name: Run show_info.py
       run: |
@@ -106,7 +106,7 @@ jobs:
     - name: Extract artifacts
       working-directory: pkg
       run: |
-        python util_funcs.py --func=extractall --pat=artifacts/** --extract_to=dist
+        python util_funcs.py --func="extractall" --pat="artifacts/**" --extract_to="dist"
 
      - name: Display structure of downloaded files
       run: ls -R
