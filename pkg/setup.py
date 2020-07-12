@@ -112,10 +112,12 @@ ext_modules = [
 
 long_description = ""
 long_description_content_type = "text/markdown"
-with open("../readme.md") as readme:
-    long_description = readme.read()
-    long_description_content_type = "text/markdown"
-
+try:
+    with open("readme.md") as readme:
+        long_description = readme.read()
+        long_description_content_type = "text/markdown"
+except:
+    print("readme.md not found")
 
 setup(
     name="actions_python_cpp_compiler",
