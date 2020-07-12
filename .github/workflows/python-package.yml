@@ -143,10 +143,10 @@ jobs:
       run: |
         util_funcs.py --func=copyfiles --pat=artifacts/**/*.whl --dest_to=dist
 
-    #- name: Publish package to PyPI
-    #  uses: pypa/gh-action-pypi-publish@master
-    #  with:
-    #    user: __token__
-    #    password: ${{ secrets.TOKEN_UPLOAD_TEST_PYPI_ORG }}
-    #    packages_dir: dist/
-    #    repository_url: https://test.pypi.org/legacy/
+    - name: Publish package to PyPI
+      uses: pypa/gh-action-pypi-publish@master
+      with:
+        user: __token__
+        password: ${{ secrets.TOKEN_UPLOAD_TEST_PYPI_ORG }}
+        packages_dir: dist/
+        repository_url: https://test.pypi.org/legacy/
