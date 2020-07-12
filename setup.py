@@ -17,13 +17,13 @@ def get_version():
     """Return version tuple of strings."""
     __version__ = ""
     __version_cpp__ = ""
-    with open("python/__init__.py") as input_file:
+    with open("pkg/python/__init__.py") as input_file:
         for line in input_file:
             if line.startswith("__version__"):
                 __version__ = ast.parse(line).body[0].value.s  # type: ignore
                 break
 
-    with open("src/python_onefile.cpp") as input_file:
+    with open("pkg/src/python_onefile.cpp") as input_file:
         for line in input_file:
             if "__version__" in line:
                 L = line.strip()
@@ -60,6 +60,8 @@ def get_fname_path(start_path, fnames):
         print(fname)
     #raise ValueError(msg)
 
+# try to define structure where to finc python.h
+#cpython_include.append("/", "some_file_that_not_exist.some_file_that_not_exist"))
 
 cpython_include = []
 if (os.environ.get("pythonLocation", "") != ""):
@@ -94,7 +96,7 @@ elif sys.platform == "win32":
 
 test_mode = True
 if test_mode:
-    sources = ["src/python_onefile.cpp"]
+    sources = ["pkg/src/python_onefile.cpp"]
 
 
 ext_modules = [
@@ -141,4 +143,4 @@ setup(
     ext_modules=ext_modules,
     packages=["actions_python_cpp_compiler"],
     package_dir={
-        "actions_python_cpp_compiler": "python"})
+        "actions_python_cpp_compiler": "pkg/python"})

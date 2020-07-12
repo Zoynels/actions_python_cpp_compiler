@@ -364,3 +364,6 @@ pkg/build
 pkg/dist
 pkg/lib
 *.egg-info
+build
+dist
+lib
