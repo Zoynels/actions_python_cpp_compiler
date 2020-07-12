@@ -66,6 +66,7 @@ jobs:
     - name: Lint with flake8/isort/autopep8_quotes
       working-directory: pkg
       run: |
+        isort --diff --recursive .
         isort --check-only --recursive .
         # autopep8_quotes --check-soft --recursive --files=.
         # stop the build if there are Python syntax errors or undefined names
