@@ -31,11 +31,11 @@ def get_version():
                 break
     if __version__ == "" and __version_cpp__ == "":
         raise ValueError(
-            f"Can't detect __version__ of main module and __version_cpp__ of cpp module!")
+            "Can't detect __version__ of main module and __version_cpp__ of cpp module!")
     if __version__ == "":
-        raise ValueError(f"Can't detect __version__ of main module!")
+        raise ValueError("Can't detect __version__ of main module!")
     if __version_cpp__ == "":
-        raise ValueError(f"Can't detect __version_cpp__ of cpp module!")
+        raise ValueError("Can't detect __version_cpp__ of cpp module!")
 
     return __version__, __version_cpp__
 
@@ -45,8 +45,9 @@ def get_fname_path(start_path, fname):
         for f in filenames:
             if str(f).lower() == fname:
                 return os.path.abspath(dp)
-    raise ValueError(f"Can't find {fname} in folder {start_path} and its subfolders! " +
-                     f"Please check 'pythonLocation' environment variable!")
+    msg = (f"Can't find {fname} in folder {start_path} and its subfolders! " +
+           "Please check 'pythonLocation' environment variable!")
+    raise ValueError(msg)
 
 
 cpython_include = []
@@ -117,8 +118,8 @@ setup(
     url="https://github.com/Zoynels/actions_python_cpp_compiler",
     author="Zoynels",
     author_email="zoynels@gmail.com",
-    description=f"GitHub Actions to build/install/test for c++ module with pybind11:" +
-    f"wrapper version {get_version()[0]} and cpp-module version {get_version()[1]}",
+    description=("GitHub Actions to build/install/test for c++ module with pybind11:" +
+                 f"wrapper version {get_version()[0]} and cpp-module version {get_version()[1]}"),
     long_description=long_description,
     long_description_content_type=long_description_content_type,
     license="GNU Affero General Public License v3",
