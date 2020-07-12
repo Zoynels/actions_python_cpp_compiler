@@ -32,8 +32,8 @@ jobs:
       fail-fast: true # fail-fast: true meant that if one test fail, then all running tests will be canceled
       matrix:
         config:
-        - { name: "Ubuntu (py38_x64)", os: ubuntu-latest, python-version: 3.8, architecture: x64, artifact_name: "ubuntu-latest.py38_x64" }
-        - { name: "macOS (py38_x64)", os: macos-latest, python-version: 3.8, architecture: x64, artifact_name: "macos-latest.py38_x64" }
+        - { name: "Ubuntu (py38_x64)", os: ubuntu-latest, python-version: 3.8, architecture: x64, artifact_name: "ubuntu-latest.py38_x64.zip" }
+        - { name: "macOS (py38_x64)", os: macos-latest, python-version: 3.8, architecture: x64, artifact_name: "macos-latest.py38_x64.zip" }
 
     steps:
     - uses: actions/checkout@v2
@@ -55,16 +55,14 @@ jobs:
         pip install -U setuptools wheel flake8 pytest
 
     - name: Build package (setup.py)
+      working-directory: pkg
       run: |
-        cd pkg
         python setup.py build --build-lib=lib bdist_wheel
-        cd ..
 
     - name: Install package (dist/*.whl)
+      working-directory: pkg
       run: |
-        cd pkg
-        python install_dist.py
-        cd ..
+        python util_funcs.py --func=install_dist --pat=dist/**.whl --pkg_name=actions_python_cpp_compiler
 
     - name: Run show_info.py
       run: |
@@ -90,22 +88,37 @@ jobs:
       with:
         submodules: 'false'
  
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.8
+        architecture: x64
+
     - name: Download artifacts
       uses: actions/download-artifact@v2
       with:
-        path: dist
+        path: artifacts
  
     - name: Display structure of downloaded files
       run: ls -R
-      working-directory: dist
- 
+      working-directory: artifacts
+
+    - name: Extract artifacts
+      working-directory: pkg
+      run: |
+        python util_funcs.py --func=extractall --pat=artifacts/** --extract_to=dist
+
+     - name: Display structure of downloaded files
+      run: ls -R
+      working-directory: pkg/dist
+
     - name: Create Release
       id: upload-release-asset 
       uses: softprops/action-gh-release@v1
       with:
         tag_name: "test1"
         files: |
-            dist/**.whl
-        body_path: ${{ github.workflow }}/readme.md
+            pkg/dist/**.whl
+        body_path: readme.md
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
