@@ -3,6 +3,7 @@
 import ast
 import os
 import platform
+import re
 import sys
 
 # first import setuptools
@@ -44,13 +45,18 @@ def get_version():
 
 def get_fname_path(start_path, fnames):
     if not isinstance(fnames, list): fnames = [fnames]
+    found_files = []
     for dp, dn, filenames in os.walk(start_path):
         for f in filenames:
+            found_files.append(os.path.join(dp, f))
             for fname in fnames:
-                if str(f).lower() == fname:
+                if re.match(fname, str(f).lower()):
                     return os.path.abspath(dp)
     msg = (f"Can't find {fnames} in folder {start_path} and its subfolders! " +
            "Please check 'pythonLocation' environment variable!")
+    print(msg)
+    for fname in found_files:
+        print(fname)
     raise ValueError(msg)
 
 
@@ -64,7 +70,7 @@ else:
 
 cpython_library = []
 if (os.environ.get("pythonLocation", "") != ""):
-    cpython_include.append(get_fname_path(os.path.join(os.environ["pythonLocation"]), ["python3.lib", "libpython3.so"]))
+    cpython_include.append(get_fname_path(os.path.join(os.environ["pythonLocation"]), ["python[0-9\.]+.lib", "libpython[0-9\.]+.so", "libpython[0-9\.]+.dylib"]))
 else:
     raise ValueError("Please set 'pythonLocation' environment variable where Python.h and " +
                      "python3.lib/libpython3.so exist! Files will be searched recursively is this folder.")
