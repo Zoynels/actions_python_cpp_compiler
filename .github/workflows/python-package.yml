@@ -42,7 +42,6 @@ jobs:
       matrix:
         config:
         - { name: "Ubuntu (py38_x64)", os: ubuntu-latest, python-version: 3.8, architecture: x64, artifact_name: "ubuntu-latest.py38_x64.zip" }
-        - { name: "macOS (py38_x64)", os: macos-latest, python-version: 3.8, architecture: x64, artifact_name: "macos-latest.py38_x64.zip" }
 
     steps:
     - uses: actions/checkout@v2
@@ -95,12 +94,29 @@ jobs:
       run: |
         twine check dist/*
 
+    #- name: Upload wheel artifact
+    #  if: ${{ success() }}
+    #  uses: actions/upload-artifact@v2
+    #  with:
+    #    name: ${{ matrix.config.artifact_name }}
+    #    path: pkg/dist/*.whl
+
+    - name: Build manylinux Python wheels
+      uses: RalfG/python-wheels-manylinux-build@v0.2.2-manylinux2010_x86_64
+      with:
+        python-versions: 'cp36-cp36m cp37-cp37m'
+        build-requirements: ''
+        system-packages: 'lrzip-devel zlib-devel'
+        package-path: 'pkg'
+        pip-wheel-args: '--no-deps'
+
     - name: Upload wheel artifact
       if: ${{ success() }}
       uses: actions/upload-artifact@v2
       with:
         name: ${{ matrix.config.artifact_name }}
-        path: pkg/dist/*.whl
+        path: pkg/wheelhouse/*-manylinux*.whl
+
 
   release:
     if: startsWith(github.ref, 'refs/tags/v')
