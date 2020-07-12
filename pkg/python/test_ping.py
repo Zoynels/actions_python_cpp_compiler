@@ -1,6 +1,5 @@
-import pytest
-
 import actions_python_cpp_compiler
+import pytest
 
 
 @pytest.mark.parametrize("value", [1, "some text"])
