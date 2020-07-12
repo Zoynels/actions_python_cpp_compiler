@@ -48,7 +48,7 @@ jobs:
 
 
     - id: branch_name2
-      name: Branch name2
+      name: Branch name
       run: |
         echo ::set-output name=SOURCE_NAME::${GITHUB_REF#refs/*/}
         echo ::set-output name=SOURCE_BRANCH::${GITHUB_REF#refs/heads/}
