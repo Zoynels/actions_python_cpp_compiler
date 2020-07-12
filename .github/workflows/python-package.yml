@@ -33,7 +33,7 @@ jobs:
       matrix:
         config:
         - { name: "Ubuntu (py38_x64)", os: ubuntu-latest, python-version: 3.8, architecture: x64, artifact_name: "ubuntu-latest.py38_x64.zip" }
-        - { name: "macOS (py38_x64)", os: macos-latest, python-version: 3.8, architecture: x64, artifact_name: "macos-latest.py38_x64.zip" }
+        #- { name: "macOS (py38_x64)", os: macos-latest, python-version: 3.8, architecture: x64, artifact_name: "macos-latest.py38_x64.zip" }
 
     steps:
     - uses: actions/checkout@v2
@@ -53,16 +53,25 @@ jobs:
         echo ::set-output name=SOURCE_NAME::${GITHUB_REF#refs/*/}
         echo ::set-output name=SOURCE_BRANCH::${GITHUB_REF#refs/heads/}
         echo ::set-output name=SOURCE_TAG::${GITHUB_REF#refs/tags/}
+        echo ::set-output name=GITHUB_REF_2::${GITHUB_REF#refs/tags/}
+        echo ::set-output name=GITHUB_REF_3::${{ github.ref }}
+        echo ::set-output name=GITHUB_REF_4::github.ref
 
     - name: Build base image
       run: |
         echo $SOURCE_NAME
         echo $SOURCE_BRANCH
         echo $SOURCE_TAG
+        echo $GITHUB_REF_2
+        echo $GITHUB_REF_3
+        echo $GITHUB_REF_4
       env:
         SOURCE_NAME: ${{ steps.branch_name2.outputs.SOURCE_NAME }}
         SOURCE_BRANCH: ${{ steps.branch_name2.outputs.SOURCE_BRANCH }}
         SOURCE_TAG: ${{ steps.branch_name2.outputs.SOURCE_TAG }}
+        GITHUB_REF_2: ${{ steps.branch_name2.outputs.GITHUB_REF_2 }}
+        GITHUB_REF_3: ${{ steps.branch_name2.outputs.GITHUB_REF_3 }}
+        GITHUB_REF_4: ${{ steps.branch_name2.outputs.GITHUB_REF_4 }}
 
 
     - name: Display Python version
