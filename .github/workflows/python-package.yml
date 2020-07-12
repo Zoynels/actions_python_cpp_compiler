@@ -42,7 +42,7 @@ jobs:
       matrix:
         config:
         - { name: "Ubuntu (py38_x64)", os: ubuntu-latest, python-version: 3.8, architecture: x64, artifact_name: "ubuntu-latest.py38_x64.zip" }
-        #- { name: "macOS (py38_x64)", os: macos-latest, python-version: 3.8, architecture: x64, artifact_name: "macos-latest.py38_x64.zip" }
+        - { name: "macOS (py38_x64)", os: macos-latest, python-version: 3.8, architecture: x64, artifact_name: "macos-latest.py38_x64.zip" }
 
     steps:
     - uses: actions/checkout@v2
@@ -141,7 +141,7 @@ jobs:
 
     - name: Copy whl files into dist folder
       run: |
-        util_funcs.py --func=copyfiles --pat=artifacts/**/*.whl --dest_to=dist
+        python pkg/util_funcs.py --func=copyfiles --pat=artifacts/**/*.whl --dest_to=dist
 
     - name: Publish package to PyPI
       uses: pypa/gh-action-pypi-publish@master
