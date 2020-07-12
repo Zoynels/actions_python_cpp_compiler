@@ -106,4 +106,4 @@ jobs:
     - name: Extract artifacts
       working-directory: pkg
       run: |
-        python util_funcs.py
+        python util_funcs.py --func="extractall" --pat="artifacts/**" --extract_to="dist"
