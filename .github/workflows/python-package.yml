@@ -97,17 +97,27 @@ jobs:
     - name: Download artifacts
       uses: actions/download-artifact@v2
       with:
-        path: artifacts
+        path: pkg/artifacts
  
-    - name: Display structure of downloaded files (artifacts)
+    - name: Display structure of downloaded files (pkg/artifacts)
       run: ls -R
-      working-directory: artifacts
+      working-directory: pkg/artifacts
 
     - name: Extract artifacts
       working-directory: pkg
       run: |
         python util_funcs.py --func="extractall" --pat="artifacts/**" --extract_to="dist"
 
-    - name: Display structure of downloaded files (pkg/dist)
-      working-directory: pkg/dist
+    - name: Display structure of downloaded files (pkg)
+      working-directory: pkg
       run: ls -R
+
+    - name: Create Release
+      uses: softprops/action-gh-release@v1
+      with:
+        tag_name: "test1"
+        files: |
+            pkg/dist/**.whl
+        body_path: readme.md
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
