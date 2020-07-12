@@ -65,7 +65,7 @@ cpython_include = []
 if (os.environ.get("pythonLocation", "") != ""):
     cpython_include.append(get_fname_path(os.path.join(os.environ["pythonLocation"]), "python.h"))
     cpython_include.append(get_fname_path(os.path.join(os.environ["pythonLocation"]), "pyconfig.h"))
-else:
+#else:
 #    raise ValueError("Please set 'pythonLocation' environment variable where Python.h and " +
 #                     "python3.lib/libpython3.so exist! Files will be searched recursively is this folder.")
 
