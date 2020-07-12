@@ -6,11 +6,10 @@ import platform
 import sys
 
 # first import setuptools
-from distutils.core import Extension
-from distutils.core import setup
-
 # second import distutils
 import setuptools  # noqa
+from distutils.core import Extension
+from distutils.core import setup
 
 
 def get_version():
