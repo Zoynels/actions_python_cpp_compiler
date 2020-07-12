@@ -27,7 +27,42 @@ on:
 
 
 jobs:
-  build:
+  build_pre_test:
+    name: ${{ matrix.config.name }}
+    runs-on: ${{ matrix.config.os }}
+    defaults:
+      run:
+        working-directory: pkg
+    strategy:
+      fail-fast: false
+      matrix:
+        config:
+        - { name: "Ubuntu (py38_x64)", os: ubuntu-latest, python-version: 3.8, architecture: x64, artifact_name: "ubuntu-latest.py38_x64.whl.zip" }
+
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        submodules: 'recursive'
+
+    - name: Set up Python ${{ matrix.config.python-version }}
+      uses: actions/setup-python@v2
+      with:
+        python-version: ${{ matrix.config.python-version }}
+        architecture: ${{ matrix.config.architecture }}
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -U setuptools wheel flake8 pytest
+
+    - name: Build/Install/Test
+      run: |
+        python setup.py build --build-lib=lib bdist_wheel
+        python install_dist.py
+        python -c "import actions_python_cpp_compiler; actions_python_cpp_compiler.run_tests()"
+
+  build_all:
+    needs: build_pre_test
     name: ${{ matrix.config.name }}
     runs-on: ${{ matrix.config.os }}
     strategy:
@@ -90,4 +125,3 @@ jobs:
       with:
         name: ${{ matrix.config.artifact_name }}
         path: pkg/dist/*.whl
-
