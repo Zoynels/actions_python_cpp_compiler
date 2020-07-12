@@ -65,6 +65,7 @@ jobs:
         echo $GITHUB_REF_2
         echo $GITHUB_REF_3
         echo $GITHUB_REF_4
+        echo "$GITHUB_CONTEXT"
       env:
         SOURCE_NAME: ${{ steps.branch_name2.outputs.SOURCE_NAME }}
         SOURCE_BRANCH: ${{ steps.branch_name2.outputs.SOURCE_BRANCH }}
@@ -72,6 +73,7 @@ jobs:
         GITHUB_REF_2: ${{ steps.branch_name2.outputs.GITHUB_REF_2 }}
         GITHUB_REF_3: ${{ steps.branch_name2.outputs.GITHUB_REF_3 }}
         GITHUB_REF_4: ${{ steps.branch_name2.outputs.GITHUB_REF_4 }}
+        GITHUB_CONTEXT: ${{ toJson(github) }}
 
 
     - name: Display Python version
@@ -107,7 +109,7 @@ jobs:
         path: pkg/dist/*.whl
 
   release:
-    if: contains(${{ github.ref }}, 'tags/v')
+    if: contains(github.ref, 'tags/v')
     needs: [build_test_ubuntu_py38_x64]
     name: "release"
     runs-on: ubuntu-latest
