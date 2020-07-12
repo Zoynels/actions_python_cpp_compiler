@@ -4,7 +4,8 @@ import ast
 import os
 import platform
 import sys
-from distutils.core import Extension, setup
+from distutils.core import Extension
+from distutils.core import setup
 
 import setuptools  # noqa
 
