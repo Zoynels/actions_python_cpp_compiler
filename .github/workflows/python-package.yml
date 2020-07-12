@@ -1,7 +1,4 @@
-﻿# This workflow will install Python dependencies, run tests and lint with a variety of Python versions
-# For more information see: https://help.github.com/actions/language-and-framework-guides/using-python-with-github-actions
-
-name: Python package
+﻿name: Python + CPP package
 
 on:
   push:
@@ -32,7 +29,7 @@ jobs:
     name: ${{ matrix.config.name }}
     runs-on: ${{ matrix.config.os }}
     strategy:
-      fail-fast: false
+      fail-fast: true # fail-fast: true meant that if one test fail, then all running tests will be canceled
       matrix:
         config:
         - { name: "Ubuntu (py38_x64)", os: ubuntu-latest, python-version: 3.8, architecture: x64, artifact_name: "ubuntu-latest.py38_x64.whl.zip" }
@@ -93,7 +90,7 @@ jobs:
     name: ${{ matrix.config.name }}
     runs-on: ${{ matrix.config.os }}
     strategy:
-      fail-fast: false
+      fail-fast: false # fail-fast: false meant that if one test fail, then other tests will continue running
       matrix:
         config:
         # python 3.7 (macOS and Ubuntu has no x86 version)
