@@ -38,7 +38,7 @@ jobs:
     name: ${{ matrix.config.name }}
     runs-on: ${{ matrix.config.os }}
     strategy:
-      fail-fast: true # fail-fast: true meant that if one test fail, then all running tests will be canceled
+      fail-fast: false # fail-fast: true meant that if one test fail, then all running tests will be canceled
       matrix:
         config:
         - { name: "Ubuntu (py38_x64)", os: ubuntu-latest, python-version: 3.8, architecture: x64, artifact_name: "ubuntu-latest.py38_x64.zip" }
@@ -63,17 +63,6 @@ jobs:
         python -m pip install --upgrade pip
         pip install -U setuptools wheel flake8 pytest twine isort
 
-    - name: Lint with flake8/isort/autopep8_quotes
-      working-directory: pkg
-      run: |
-        isort --diff .
-        isort --check-only .
-        # autopep8_quotes --check-soft --recursive --files=.
-        # stop the build if there are Python syntax errors or undefined names
-        flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
-        # exit-zero treats all errors as warnings.
-        flake8 . --count --max-complexity=10 --statistics
-
     - name: Build package (setup.py)
       working-directory: pkg
       run: |
@@ -91,6 +80,18 @@ jobs:
     - name: Test with builtin test function
       run: |
         python -c "import actions_python_cpp_compiler; actions_python_cpp_compiler.run_tests()"
+
+
+    - name: Lint with flake8/isort/autopep8_quotes
+      working-directory: pkg
+      run: |
+        isort --diff .
+        isort --check-only .
+        # autopep8_quotes --check-soft --recursive --files=.
+        # stop the build if there are Python syntax errors or undefined names
+        flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
+        # exit-zero treats all errors as warnings.
+        flake8 . --count --max-complexity=10 --statistics
 
     - name: Twine check
       working-directory: pkg
