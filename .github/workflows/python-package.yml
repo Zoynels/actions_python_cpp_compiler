@@ -6,7 +6,7 @@ on:
       - refs/tags/*
       - master
     tags:
-      - i_need_tag
+      - v*
     paths:
       - '**'
       - '!**.md'
