@@ -58,7 +58,7 @@ def get_fname_path(start_path, fnames):
     print(msg)
     for fname in found_files:
         print(fname)
-    raise ValueError(msg)
+    #raise ValueError(msg)
 
 
 cpython_include = []
@@ -66,16 +66,16 @@ if (os.environ.get("pythonLocation", "") != ""):
     cpython_include.append(get_fname_path(os.path.join(os.environ["pythonLocation"]), "python.h"))
     cpython_include.append(get_fname_path(os.path.join(os.environ["pythonLocation"]), "pyconfig.h"))
 else:
-    raise ValueError("Please set 'pythonLocation' environment variable where Python.h and " +
-                     "python3.lib/libpython3.so exist! Files will be searched recursively is this folder.")
+#    raise ValueError("Please set 'pythonLocation' environment variable where Python.h and " +
+#                     "python3.lib/libpython3.so exist! Files will be searched recursively is this folder.")
 
 cpython_library = []
 if (os.environ.get("pythonLocation", "") != ""):
-    cpython_include.append(get_fname_path(os.path.join(os.environ["pythonLocation"]), [
-                           r"python[0-9\.]+.lib", r"libpython[0-9\.]+.so", r"libpython[0-9\.]+.dylib"]))
-else:
-    raise ValueError("Please set 'pythonLocation' environment variable where Python.h and " +
-                     "python3.lib/libpython3.so exist! Files will be searched recursively is this folder.")
+    fnames = [r"python[0-9\.]+.lib", r"libpython[0-9\.]+.so", r"libpython[0-9\.]+.dylib"]
+    cpython_include.append(get_fname_path(os.path.join(os.environ["pythonLocation"]), fnames))
+#else:
+#    raise ValueError("Please set 'pythonLocation' environment variable where Python.h and " +
+#                     "python3.lib/libpython3.so exist! Files will be searched recursively is this folder.")
 
 if sys.platform == "linux" or platform == "linux2":
     extra_compile_args = ["-std=c++17"]
