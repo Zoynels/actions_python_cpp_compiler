@@ -102,3 +102,8 @@ jobs:
     - name: Display structure of downloaded files
       run: ls -R
       working-directory: artifacts
+
+    - name: Extract artifacts
+      working-directory: pkg
+      run: |
+        python util_funcs.py
