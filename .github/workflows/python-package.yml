@@ -84,6 +84,7 @@ jobs:
     - name: Lint with flake8
       if: ${{ always() }}
       run: |
+        # autopep8 --aggressive --aggressive --aggressive --recursive --in-place pkg/python setup.py util_funcs.py
         flake8 --count --max-complexity=10 --statistics pkg/python setup.py util_funcs.py
 
     - name: Twine check
