@@ -42,12 +42,14 @@ def get_version():
     return __version__, __version_cpp__
 
 
-def get_fname_path(start_path, fname):
+def get_fname_path(start_path, fnames):
+    if not isinstance(fnames, list): fnames = [fnames]
     for dp, dn, filenames in os.walk(start_path):
         for f in filenames:
-            if str(f).lower() == fname:
-                return os.path.abspath(dp)
-    msg = (f"Can't find {fname} in folder {start_path} and its subfolders! " +
+            for fname in fnames:
+                if str(f).lower() == fname:
+                    return os.path.abspath(dp)
+    msg = (f"Can't find {fnames} in folder {start_path} and its subfolders! " +
            "Please check 'pythonLocation' environment variable!")
     raise ValueError(msg)
 
@@ -62,14 +64,7 @@ else:
 
 cpython_library = []
 if (os.environ.get("pythonLocation", "") != ""):
-    if sys.platform == "linux" or platform == "linux2":
-        cpython_include.append(get_fname_path(os.path.join(os.environ["pythonLocation"]), "libpython3.so"))
-    elif sys.platform == "darwin":
-        cpython_include.append(get_fname_path(os.path.join(os.environ["pythonLocation"]), "libpython3.so"))
-    elif sys.platform == "win32":
-        cpython_include.append(get_fname_path(os.path.join(os.environ["pythonLocation"]), "python3.lib"))
-    else:
-        raise RuntimeError(f"Unknown platform: {sys.platform}")
+    cpython_include.append(get_fname_path(os.path.join(os.environ["pythonLocation"]), ["python3.lib", "libpython3.so"]))
 else:
     raise ValueError("Please set 'pythonLocation' environment variable where Python.h and " +
                      "python3.lib/libpython3.so exist! Files will be searched recursively is this folder.")
