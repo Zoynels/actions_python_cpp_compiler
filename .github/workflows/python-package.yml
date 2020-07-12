@@ -104,11 +104,10 @@ jobs:
       run: ls -R
       working-directory: artifacts
  
-    - name: Echo (1)
-      run: echo ${{ github.ref }}
- 
-    - name: Echo (2)
-      run: echo github.ref
+    - name: Get the version
+      id: get_version
+      run: echo ::set-output name=VERSION::${GITHUB_REF/refs\/tags\//}
+      shell: bash
  
     - name: Display structure of downloaded files (artifacts)
       run: ls -R
@@ -117,7 +116,7 @@ jobs:
     - name: Create Release
       uses: softprops/action-gh-release@v1
       with:
-        tag_name: github.ref
+        tag_name: ${{ steps.get_version.outputs.VERSION }}
         files: |
             artifacts/**/*.whl
         body_path: readme.md
