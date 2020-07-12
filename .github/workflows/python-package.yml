@@ -73,7 +73,6 @@ jobs:
         # exit-zero treats all errors as warnings.
         flake8 . --count --max-complexity=10 --statistics
 
-
     - name: Build package (setup.py)
       working-directory: pkg
       run: |
@@ -140,7 +139,7 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-     - name: Copy whl files into dist folder
+    - name: Copy whl files into dist folder
       run: |
         util_funcs.py --func=copyfiles --pat=artifacts/**/*.whl --dest_to=dist
 
