@@ -76,7 +76,7 @@ jobs:
       uses: actions/upload-artifact@v2
       with:
         name: ${{ matrix.config.artifact_name }}
-        path: pkg/wheelhouse/*-manylinux*.whl
+        path: wheelhouse/*-manylinux*.whl
 
 
 
@@ -124,12 +124,10 @@ jobs:
         pip install -U setuptools wheel flake8 pytest twine isort
 
     - name: Build package (setup.py)
-      working-directory: pkg
       run: |
         python setup.py build --build-lib=lib bdist_wheel
 
     - name: Install package (dist/*.whl)
-      working-directory: pkg
       run: |
         python util_funcs.py --func="install_dist" --pat="dist/**/*.whl" --pkg_name="actions_python_cpp_compiler"
 
@@ -139,19 +137,18 @@ jobs:
 
     - name: Lint with isort
       if: ${{ always() }}
-      working-directory: pkg
+      working-directory: pkg/python
       run: |
         isort --diff .
         isort --check-only .
 
     - name: Lint with flake8
       if: ${{ always() }}
-      working-directory: pkg
+      working-directory: pkg/python
       run: |
         flake8 . --count --max-complexity=10 --statistics
 
     - name: Twine check
-      working-directory: pkg
       run: |
         twine check dist/*
 
@@ -160,7 +157,7 @@ jobs:
       uses: actions/upload-artifact@v2
       with:
         name: ${{ matrix.config.artifact_name }}
-        path: pkg/dist/*.whl
+        path: dist/*.whl
 
   release:
     if: startsWith(github.ref, 'refs/tags/v')
@@ -201,7 +198,7 @@ jobs:
 
     - name: Copy whl files into dist folder
       run: |
-        python pkg/util_funcs.py --func=copyfiles --pat=artifacts/**/*.whl --dest_to=dist
+        python util_funcs.py --func=copyfiles --pat=artifacts/**/*.whl --dest_to=dist
 
     - name: Install dependencies
       run: |
