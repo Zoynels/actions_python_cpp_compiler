@@ -108,3 +108,6 @@ jobs:
       run: |
         python util_funcs.py --func="extractall" --pat="artifacts/**" --extract_to="dist"
 
+    - name: Display structure of downloaded files (pkg/dist)
+      working-directory: pkg/dist
+      run: ls -R
