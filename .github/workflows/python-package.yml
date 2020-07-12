@@ -108,18 +108,3 @@ jobs:
       run: |
         python util_funcs.py --func="extractall" --pat="artifacts/**" --extract_to="dist"
 
-     - name: Display structure of downloaded files (pkg/dist)
-      run: ls -R
-      working-directory: pkg/dist
-
-
-    - name: Create Release
-      id: upload-release-asset 
-      uses: softprops/action-gh-release@v1
-      with:
-        tag_name: "test1"
-        files: |
-            pkg/dist/**.whl
-        body_path: readme.md
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
