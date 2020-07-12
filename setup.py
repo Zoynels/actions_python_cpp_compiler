@@ -58,26 +58,23 @@ def get_fname_path(start_path, fnames):
     print(msg)
     for fname in found_files:
         print(fname)
-    #raise ValueError(msg)
 
-# try to define structure where to finc python.h
-#cpython_include.append("/", "some_file_that_not_exist.some_file_that_not_exist"))
 
 cpython_include = []
 if (os.environ.get("pythonLocation", "") != ""):
     cpython_include.append(get_fname_path(os.path.join(os.environ["pythonLocation"]), "python.h"))
     cpython_include.append(get_fname_path(os.path.join(os.environ["pythonLocation"]), "pyconfig.h"))
-#else:
-#    raise ValueError("Please set 'pythonLocation' environment variable where Python.h and " +
-#                     "python3.lib/libpython3.so exist! Files will be searched recursively is this folder.")
+else:
+    print("Please set 'pythonLocation' environment variable where Python.h and " +
+          "python3.lib/libpython3.so exist! Files will be searched recursively is this folder.")
 
 cpython_library = []
 if (os.environ.get("pythonLocation", "") != ""):
     fnames = [r"python[0-9\.]+.lib", r"libpython[0-9\.]+.so", r"libpython[0-9\.]+.dylib"]
     cpython_include.append(get_fname_path(os.path.join(os.environ["pythonLocation"]), fnames))
-#else:
-#    raise ValueError("Please set 'pythonLocation' environment variable where Python.h and " +
-#                     "python3.lib/libpython3.so exist! Files will be searched recursively is this folder.")
+else:
+    print("Please set 'pythonLocation' environment variable where Python.h and " +
+          "python3.lib/libpython3.so exist! Files will be searched recursively is this folder.")
 
 if sys.platform == "linux" or platform == "linux2":
     extra_compile_args = ["-std=c++17"]
@@ -118,7 +115,7 @@ try:
     with open("readme.md") as readme:
         long_description = readme.read()
         long_description_content_type = "text/markdown"
-except:
+except BaseException:
     print("readme.md not found")
 
 setup(
