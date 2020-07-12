@@ -2,9 +2,9 @@
 
 on:
   push:
-    branches: [ master ]
-    tags:
-      - '*'
+    branches:
+      - master
+      - refs/tags/*
     paths:
       - '**'
       - '!**.md'
@@ -14,7 +14,10 @@ on:
       - '!external/**'
       - '!docs/**'
   pull_request:
-    branches: [ master ]
+    branches:
+      - master
+    tags:
+      - '*'
     paths:
       - '**'
       - '!**.md'
