@@ -108,7 +108,7 @@ jobs:
       with:
         tag_name: "test1"
         files: |
-            artifacts/**.whl
+            artifacts/**/*.whl
         body_path: readme.md
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
