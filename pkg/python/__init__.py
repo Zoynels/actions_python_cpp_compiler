@@ -2,11 +2,12 @@
 __version_cpp__ = cpp_module_test.__version__
 __version__ = "0.0.1"
 
+
 def echo(value):
     return cpp_module_test.echo(str(value))
 
+
 def run_tests(fname=None):
-    import sys
     import pathlib
     import subprocess
 
@@ -18,16 +19,23 @@ def run_tests(fname=None):
     elif (pathlib.Path(__file__).parent / fname).is_file():
         test_files.append(pathlib.Path(__file__).parent / fname)
 
-    test_files = [str(fname) for fname in test_files] # py37 not support pathlib.Path in subprocess
-    child = subprocess.Popen(["pytest", "-vv", "--capture=tee-sys", "-r", "s"] + test_files, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    # py37 not support pathlib.Path in subprocess
+    test_files = [str(fname) for fname in test_files]
+    child = subprocess.Popen(["pytest",
+                              "-vv",
+                              "--capture=tee-sys",
+                              "-r",
+                              "s"] + test_files,
+                             stdout=subprocess.PIPE,
+                             stderr=subprocess.PIPE)
     streamdata = child.communicate()
     for ch in [streamdata[0].split(b"\n"), streamdata[1].split(b"\n")]:
         for line in ch:
             try:
                 print(line.decode().strip())
-            except:
+            except BaseException:
                 try:
                     print(line.strip())
-                except:
+                except BaseException:
                     print(line)
     assert child.returncode == 0

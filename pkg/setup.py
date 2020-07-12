@@ -44,9 +44,8 @@ def get_fname_path(start_path, fname):
         for f in filenames:
             if str(f).lower() == fname:
                 return os.path.abspath(dp)
-    raise ValueError(
-        f"Can't find {fname} in folder {start_path} and its subfolders! " +
-        f"Please check 'pythonLocation' environment variable!")
+    raise ValueError(f"Can't find {fname} in folder {start_path} and its subfolders! " +
+                     f"Please check 'pythonLocation' environment variable!")
 
 
 cpython_include = []
@@ -54,9 +53,8 @@ if (os.environ.get("pythonLocation", "") != ""):
     cpython_include.append(get_fname_path(os.path.join(os.environ["pythonLocation"]), "python.h"))
     cpython_include.append(get_fname_path(os.path.join(os.environ["pythonLocation"]), "pyconfig.h"))
 else:
-    raise ValueError(
-        "Please set 'pythonLocation' environment variable where Python.h and " +
-        "python3.lib/libpython3.so exist! Files will be searched recursively is this folder.")
+    raise ValueError("Please set 'pythonLocation' environment variable where Python.h and " +
+                     "python3.lib/libpython3.so exist! Files will be searched recursively is this folder.")
 
 cpython_library = []
 if (os.environ.get("pythonLocation", "") != ""):
@@ -69,9 +67,8 @@ if (os.environ.get("pythonLocation", "") != ""):
     else:
         raise RuntimeError(f"Unknown platform: {sys.platform}")
 else:
-    raise ValueError(
-        "Please set 'pythonLocation' environment variable where Python.h and " +
-        "python3.lib/libpython3.so exist! Files will be searched recursively is this folder.")
+    raise ValueError("Please set 'pythonLocation' environment variable where Python.h and " +
+                     "python3.lib/libpython3.so exist! Files will be searched recursively is this folder.")
 
 if sys.platform == "linux" or platform == "linux2":
     extra_compile_args = ["-std=c++17"]
@@ -135,4 +132,5 @@ setup(
     keywords="pybind11, c++, github, actions",
     ext_modules=ext_modules,
     packages=["actions_python_cpp_compiler"],
-    package_dir={"actions_python_cpp_compiler": "python"})
+    package_dir={
+        "actions_python_cpp_compiler": "python"})
