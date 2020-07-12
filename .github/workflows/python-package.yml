@@ -33,15 +33,16 @@ on:
 
 
 jobs:
-  quick_test_ubuntu_py38_x64:
+  pre_test_ubuntu:
     # test build only on one config, if all ok, then run same steps on other configs
+    needs: [release]
     name: ${{ matrix.config.name }}
     runs-on: ${{ matrix.config.os }}
     strategy:
       fail-fast: true # fail-fast: true meant that if one test fail, then all running tests will be canceled
       matrix:
         config:
-        - { name: "manylinux on ubuntu", os: ubuntu-latest, python-version: 3.8, architecture: x64, artifact_name: "ubuntu-latest.py38_x64.zip" }
+        - { name: "Ubuntu (py38_x64)", os: ubuntu-latest, python-version: 3.8, architecture: x64, artifact_name: "ubuntu-latest.py38_x64.whl.zip" }
 
     steps:
     - uses: actions/checkout@v2
@@ -60,12 +61,64 @@ jobs:
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
-        pip install -U setuptools
+        pip install -U setuptools wheel flake8 pytest twine isort
+
+    - name: Build package (setup.py)
+      run: |
+        python setup.py build --build-lib=lib bdist_wheel
+
+    - name: Install package (dist/*.whl)
+      run: |
+        python util_funcs.py --func="install_dist" --pat="dist/**/*.whl" --pkg_name="actions_python_cpp_compiler"
+
+    - name: Test with builtin test function
+      run: |
+        python -c "import actions_python_cpp_compiler; actions_python_cpp_compiler.run_tests()"
+
+    - name: Lint with isort
+      if: ${{ always() }}
+      working-directory: pkg/python
+      run: |
+        isort --diff .
+        isort --check-only .
+
+    - name: Lint with flake8
+      if: ${{ always() }}
+      working-directory: pkg/python
+      run: |
+        flake8 . --count --max-complexity=10 --statistics
+
+    - name: Twine check
+      run: |
+        twine check dist/*
+
+
+  manylinux2010_x86_64:
+    needs: [pre_test_ubuntu]
+    # build manylinux whl, no tests (all tests for linux are in pre_test_ubuntu, it could be problems)
+    name: ${{ matrix.config.name }}
+    runs-on: ${{ matrix.config.os }}
+    strategy:
+      fail-fast: true # fail-fast: true meant that if one test fail, then all running tests will be canceled
+      matrix:
+        config:
+        - { name: "manylinux on ubuntu", os: ubuntu-latest, python-version: 3.8, architecture: x64, artifact_name: "manylinux.all.zip" }
+
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        submodules: 'recursive'
+
+    - name: Set up Python ${{ matrix.config.python-version }}
+      uses: actions/setup-python@v2
+      with:
+        python-version: ${{ matrix.config.python-version }}
+        architecture: ${{ matrix.config.architecture }}
 
     - name: Build manylinux Python wheels
       uses: RalfG/python-wheels-manylinux-build@v0.2.2-manylinux2010_x86_64
       with:
-        python-versions: 'cp37-cp37m'
+        python-versions: 'cp37-cp37m cp38-cp38m'
         build-requirements: ''
         system-packages: ''
         package-path: ''
@@ -79,10 +132,8 @@ jobs:
         path: wheelhouse/*-manylinux*.whl
 
 
-
-
-  build_all:
-    needs: [release]
+  build_windows_mac:
+    needs: [pre_test_ubuntu]
     name: ${{ matrix.config.name }}
     runs-on: ${{ matrix.config.os }}
     strategy:
@@ -101,7 +152,6 @@ jobs:
         - { name: "Windows MSVC (py38_x64)", os: windows-latest, python-version: 3.8, architecture: x64, artifact_name: "windows-latest.py38_x64.whl.zip" }
         - { name: "macOS (py38_x64)", os: macos-latest, python-version: 3.8, architecture: x64, artifact_name: "macos-latest.py38_x64.whl.zip" }
         # not a many linux
-        # already run in build_test_ubuntu_py38_x64
         #- { name: "Ubuntu (py38_x64)", os: ubuntu-latest, python-version: 3.8, architecture: x64, artifact_name: "ubuntu-latest.py38_x64.whl.zip" }
 
     steps:
@@ -161,7 +211,7 @@ jobs:
 
   release:
     if: startsWith(github.ref, 'refs/tags/v')
-    needs: [quick_test_ubuntu_py38_x64]
+    needs: [build_windows_mac, manylinux2010_x86_64]
     name: "release"
     runs-on: ubuntu-latest
     steps:
