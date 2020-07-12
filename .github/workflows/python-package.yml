@@ -2,8 +2,10 @@
 
 on:
   push:
+    # if tag "v0.0.1" and branch "master" then workflow will run twice
+    # first for branch where github.ref = refs/heads/master
+    # second for tag where github.ref = refs/tags/v0.0.1 and here is could trigger release workflow
     branches:
-      - refs/tags/*
       - master
     tags:
       - v*
@@ -53,43 +55,24 @@ jobs:
         python-version: ${{ matrix.config.python-version }}
         architecture: ${{ matrix.config.architecture }}
 
-
-    - id: branch_name2
-      name: Branch name
-      run: |
-        echo ::set-output name=SOURCE_NAME::${GITHUB_REF#refs/*/}
-        echo ::set-output name=SOURCE_BRANCH::${GITHUB_REF#refs/heads/}
-        echo ::set-output name=SOURCE_TAG::${GITHUB_REF#refs/tags/}
-        echo ::set-output name=GITHUB_REF_2::${GITHUB_REF#refs/tags/}
-        echo ::set-output name=GITHUB_REF_3::${{ github.ref }}
-        echo ::set-output name=GITHUB_REF_4::github.ref
-
-    - name: Build base image
-      run: |
-        echo $SOURCE_NAME
-        echo $SOURCE_BRANCH
-        echo $SOURCE_TAG
-        echo $GITHUB_REF_2
-        echo $GITHUB_REF_3
-        echo $GITHUB_REF_4
-        echo "$GITHUB_CONTEXT"
-      env:
-        SOURCE_NAME: ${{ steps.branch_name2.outputs.SOURCE_NAME }}
-        SOURCE_BRANCH: ${{ steps.branch_name2.outputs.SOURCE_BRANCH }}
-        SOURCE_TAG: ${{ steps.branch_name2.outputs.SOURCE_TAG }}
-        GITHUB_REF_2: ${{ steps.branch_name2.outputs.GITHUB_REF_2 }}
-        GITHUB_REF_3: ${{ steps.branch_name2.outputs.GITHUB_REF_3 }}
-        GITHUB_REF_4: ${{ steps.branch_name2.outputs.GITHUB_REF_4 }}
-        GITHUB_CONTEXT: ${{ toJson(github) }}
-
-
     - name: Display Python version
       run: python -c "import sys; print(sys.version)"
 
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
-        pip install -U setuptools wheel flake8 pytest
+        pip install -U setuptools wheel flake8 pytest twine
+
+    - name: Lint with flake8/isort/autopep8_quotes
+      working-directory: pkg
+      run: |
+        isort --check-only --recursive .
+        autopep8_quotes --check-soft --recursive --files=.
+        # stop the build if there are Python syntax errors or undefined names
+        flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
+        # exit-zero treats all errors as warnings.
+        flake8 . --count --max-complexity=10 --statistics
+
 
     - name: Build package (setup.py)
       working-directory: pkg
@@ -99,7 +82,7 @@ jobs:
     - name: Install package (dist/*.whl)
       working-directory: pkg
       run: |
-        python util_funcs.py --func="install_dist" --pat="dist/**.whl" --pkg_name="actions_python_cpp_compiler"
+        python util_funcs.py --func="install_dist" --pat="dist/**/*.whl" --pkg_name="actions_python_cpp_compiler"
 
     - name: Run show_info.py
       run: |
@@ -109,6 +92,11 @@ jobs:
       run: |
         python -c "import actions_python_cpp_compiler; actions_python_cpp_compiler.run_tests()"
 
+    - name: Twine check
+      working-directory: pkg
+      run: |
+        twine check dist/*
+
     - name: Upload wheel artifact
       uses: actions/upload-artifact@v2
       with:
@@ -116,7 +104,7 @@ jobs:
         path: pkg/dist/*.whl
 
   release:
-    if: contains(github.ref, 'tags/v')
+    if: startsWith(github.ref, 'refs/tags/v')
     needs: [build_test_ubuntu_py38_x64]
     name: "release"
     runs-on: ubuntu-latest
@@ -136,26 +124,30 @@ jobs:
       uses: actions/download-artifact@v2
       with:
         path: artifacts
- 
-    - name: Display structure of downloaded files (artifacts)
-      run: ls -R
-      working-directory: artifacts
- 
-    - name: Get the version
+
+    - name: Get tag name
       id: get_version
-      run: echo ::set-output name=VERSION::${GITHUB_REF/refs\/tags\//}
+      run: echo ::set-output name=TAG_NAME::${GITHUB_REF/refs\/tags\//}
       shell: bash
- 
-    - name: Display structure of downloaded files (artifacts)
-      run: ls -R
-      working-directory: artifacts
 
     - name: Create Release
       uses: softprops/action-gh-release@v1
       with:
-        tag_name: ${{ steps.get_version.outputs.VERSION }}
+        tag_name: ${{ steps.get_version.outputs.TAG_NAME }}
         files: |
             artifacts/**/*.whl
         body_path: readme.md
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+     - name: Copy whl files into dist folder
+      run: |
+        util_funcs.py --func=copyfiles --pat=artifacts/**/*.whl --dest_to=dist
+
+    #- name: Publish package to PyPI
+    #  uses: pypa/gh-action-pypi-publish@master
+    #  with:
+    #    user: __token__
+    #    password: ${{ secrets.TOKEN_UPLOAD_TEST_PYPI_ORG }}
+    #    packages_dir: dist/
+    #    repository_url: https://test.pypi.org/legacy/
