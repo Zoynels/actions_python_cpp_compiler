@@ -33,7 +33,7 @@ jobs:
       matrix:
         config:
         - { name: "Ubuntu (py38_x64)", os: ubuntu-latest, python-version: 3.8, architecture: x64, artifact_name: "ubuntu-latest.py38_x64.zip" }
-        #- { name: "macOS (py38_x64)", os: macos-latest, python-version: 3.8, architecture: x64, artifact_name: "macos-latest.py38_x64.zip" }
+        - { name: "macOS (py38_x64)", os: macos-latest, python-version: 3.8, architecture: x64, artifact_name: "macos-latest.py38_x64.zip" }
 
     steps:
     - uses: actions/checkout@v2
@@ -103,11 +103,21 @@ jobs:
     - name: Display structure of downloaded files (artifacts)
       run: ls -R
       working-directory: artifacts
+ 
+    - name: Echo (1)
+      run: echo ${{ github.ref }}
+ 
+    - name: Echo (2)
+      run: echo github.ref
+ 
+    - name: Display structure of downloaded files (artifacts)
+      run: ls -R
+      working-directory: artifacts
 
     - name: Create Release
       uses: softprops/action-gh-release@v1
       with:
-        tag_name: ${{ github.ref }}
+        tag_name: github.ref
         files: |
             artifacts/**/*.whl
         body_path: readme.md
