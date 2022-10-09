@@ -1,7 +1,7 @@
 ﻿from . import cpp_module_test
 
 __version_cpp__ = cpp_module_test.__version__
-__version__ = "0.0.1"
+__version__ = "0.0.3"
 
 
 def echo(value):

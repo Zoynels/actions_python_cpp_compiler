@@ -1,0 +1,21 @@
+name: Build and Upload (test.pypi.org)
+
+on:
+  workflow_dispatch
+
+jobs:
+  test:
+    uses: ./.github/workflows/test-package_ubuntu_test.yml
+
+  pkg1:
+    needs: [test]
+    uses: ./.github/workflows/python-package_windows_py38_x64.yml
+
+  pkg2:
+    needs: [test]
+    uses: ./.github/workflows/python-package_windows_py310_x64.yml
+
+  upload:
+    needs: [pkg1, pkg2]
+    uses: ./.github/workflows/upload_pip_test.yml
+    secrets: inherit

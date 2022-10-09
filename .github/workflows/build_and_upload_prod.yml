@@ -1,0 +1,47 @@
+name: Build, Upload, Release (pypi.org)
+
+on:
+  workflow_dispatch
+
+jobs:
+  test:
+    if: startsWith(github.ref, 'refs/tags/v')
+    uses: ./.github/workflows/test-package_ubuntu_test.yml
+
+  pkg1:
+    needs: [test]
+    uses: ./.github/workflows/python-package_manylinux.yml
+
+  pkg2:
+    needs: [test]
+    uses: ./.github/workflows/python-package_windows_py38_x64.yml
+
+  pkg3:
+    needs: [test]
+    uses: ./.github/workflows/python-package_windows_py39_x64.yml
+
+  pkg4:
+    needs: [test]
+    uses: ./.github/workflows/python-package_windows_py310_x64.yml
+
+  pkg5:
+    needs: [test]
+    uses: ./.github/workflows/python-package_macos_py38_x64.yml
+
+  pkg6:
+    needs: [test]
+    uses: ./.github/workflows/python-package_macos_py39_x64.yml
+
+  pkg7:
+    needs: [test]
+    uses: ./.github/workflows/python-package_macos_py310_x64.yml
+
+  release:
+    needs: [pkg1, pkg2, pkg3, pkg4, pkg5, pkg6, pkg7]
+    uses: ./.github/workflows/release.yml
+    secrets: inherit
+
+  upload:
+    needs: [release]
+    uses: ./.github/workflows/upload_pip_prod.yml
+    secrets: inherit

@@ -1,7 +1,7 @@
 #pragma once
 #define _SILENCE_CXX17_UNCAUGHT_EXCEPTION_DEPRECATION_WARNING
-#include "../../external/pybind11/include/pybind11/pybind11.h"
-#include "../../external/pybind11/include/pybind11/chrono.h"
+#include <pybind11/pybind11.h>
+#include <pybind11/chrono.h>
 #ifdef _DEBUG
 #undef _DEBUG
 #include <Python.h>
