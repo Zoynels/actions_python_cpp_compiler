@@ -7,6 +7,8 @@ on:
         required: true
       PYPI_PASSWORD_TOKEN_TEST:
         required: true
+      PYPI_URL_TEST:
+        required: true
   workflow_dispatch:
 
 jobs:
@@ -44,4 +46,5 @@ jobs:
         TWINE_USERNAME: ${{ secrets.PYPI_USERNAME_TOKEN_TEST }}
         TWINE_PASSWORD: ${{ secrets.PYPI_PASSWORD_TOKEN_TEST }}
       run: |
-        twine upload --skip-existing --non-interactive --verbose --repository-url https://test.pypi.org/legacy/ dist/*
+        twine upload --skip-existing --non-interactive --verbose --repository-url ${{ secrets.PYPI_URL_TEST }} dist/*
+        # twine upload --skip-existing --non-interactive --verbose --repository-url https://test.pypi.org/legacy/ dist/*

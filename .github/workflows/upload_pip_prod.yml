@@ -7,6 +7,8 @@ on:
         required: true
       PYPI_PASSWORD_TOKEN_PROD:
         required: true
+      PYPI_URL_PROD:
+        required: true
   workflow_dispatch:
 
 jobs:
@@ -45,4 +47,5 @@ jobs:
         TWINE_USERNAME: ${{ secrets.PYPI_USERNAME_TOKEN_PROD }}
         TWINE_PASSWORD: ${{ secrets.PYPI_PASSWORD_TOKEN_PROD }}
       run: |
-        twine upload --skip-existing --non-interactive --verbose --repository-url https://pypi.org/legacy/ dist/*
+        twine upload --skip-existing --non-interactive --verbose --repository-url ${{ secrets.PYPI_URL_PROD }} dist/*
+        # twine upload --skip-existing --non-interactive --verbose --repository-url https://pypi.org/legacy/ dist/*
