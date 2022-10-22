@@ -1,6 +1,7 @@
 ﻿# -*- coding: utf-8 -*-
 
 import ast
+import glob
 
 from pybind11.setup_helpers import Pybind11Extension
 from pybind11.setup_helpers import build_ext
@@ -41,10 +42,7 @@ def get_version():
     return __version__, __version_cpp__
 
 
-test_mode = True
-if test_mode:
-    sources = ["pkg/src/python_onefile.cpp"]
-    # sources = sorted(glob("pkg/src/*.cpp"))
+sources = sorted(glob.glob("pkg/src/**/*.cpp", recursive=True))
 
 ext_modules = [
     Pybind11Extension("actions_python_cpp_compiler.cpp_module_test", sources)
