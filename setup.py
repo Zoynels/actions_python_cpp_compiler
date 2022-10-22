@@ -12,13 +12,17 @@ def get_version():
     """Return version tuple of strings."""
     __version__ = ""
     __version_cpp__ = ""
-    with open("pkg/python/__init__.py") as input_file:
+
+    fname_py = "pkg/python/__init__.py"
+    fname_cpp = "pkg/src/python_onefile.cpp"
+
+    with open(fname_py) as input_file:
         for line in input_file:
             if line.startswith("__version__"):
                 __version__ = ast.parse(line).body[0].value.s  # type: ignore
                 break
 
-    with open("pkg/src/python_onefile.cpp") as input_file:
+    with open(fname_cpp) as input_file:
         for line in input_file:
             if "__version__" in line:
                 L = line.strip()
@@ -28,8 +32,7 @@ def get_version():
                 __version_cpp__ = ast.parse(L).body[0].value.s  # type: ignore
                 break
     if __version__ == "" and __version_cpp__ == "":
-        raise ValueError(
-            "Can't detect __version__ of main module and __version_cpp__ of cpp module!")
+        raise ValueError("Can't detect __version__ of main module and __version_cpp__ of cpp module!")
     if __version__ == "":
         raise ValueError("Can't detect __version__ of main module!")
     if __version_cpp__ == "":
