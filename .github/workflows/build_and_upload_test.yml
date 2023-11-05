@@ -13,7 +13,7 @@ jobs:
 
   pkg2:
     needs: [test]
-    uses: ./.github/workflows/python-package_windows_py310_x64.yml
+    uses: ./.github/workflows/python-package_windows_py312_x64.yml
 
   upload:
     needs: [pkg1, pkg2]
