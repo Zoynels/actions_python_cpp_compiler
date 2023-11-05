@@ -37,7 +37,7 @@ jobs:
 
     - name: Build package (setup.py)
       run: |
-        python build --wheel
+        python -m build --wheel
 
     - name: Install package (dist/*.whl)
       run: |
