@@ -1,18 +1,18 @@
-﻿name: windows_py39_x64 
+﻿name: windows_py311_x64 
 
 on:
   workflow_call:
   workflow_dispatch:
 
 jobs:
-  windows_py39_x64:
+  windows_py311_x64:
     name: ${{ matrix.config.name }}
     runs-on: ${{ matrix.config.os }}
     strategy:
       fail-fast: true # fail-fast: true meant that if one test fail, then all running tests will be canceled
       matrix:
         config:
-        - { name: "Windows MSVC (py39_x64)", os: windows-latest, python-version: '3.9', architecture: x64, artifact_name: "windows-latest.py39_x64.whl.zip" }
+        - { name: "Windows MSVC (py311_x64)", os: windows-latest, python-version: '3.11', architecture: x64, artifact_name: "windows-latest.py311_x64.whl.zip" }
 
     steps:
     - uses: actions/checkout@v3

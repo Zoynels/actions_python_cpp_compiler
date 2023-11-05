@@ -31,11 +31,11 @@ jobs:
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
-        pip install -U setuptools wheel flake8 pytest twine isort pybind11==2.11
+        pip install -U setuptools wheel flake8 pytest twine isort build pybind11==2.11
 
     - name: Build package (setup.py)
       run: |
-        python setup.py build --build-lib=lib bdist_wheel
+        python -m build --wheel
 
     - name: Install package (dist/*.whl)
       run: |
