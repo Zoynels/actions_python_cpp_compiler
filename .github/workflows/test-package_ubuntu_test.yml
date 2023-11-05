@@ -63,10 +63,3 @@ jobs:
       if: ${{ always() }}
       run: |
         twine check dist/*
-
-    - name: Upload wheel artifact
-      if: ${{ success() }}
-      uses: actions/upload-artifact@v3
-      with:
-        name: ${{ matrix.config.artifact_name }}
-        path: dist/*.whl
