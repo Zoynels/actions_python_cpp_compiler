@@ -14,7 +14,7 @@ jobs:
       fail-fast: true # fail-fast: true meant that if one test fail, then all running tests will be canceled
       matrix:
         config:
-        - { name: "pre_test Ubuntu (py312_x64)", os: ubuntu-latest, python-version: '3.12', architecture: x64 }
+        - { name: "pre_test Ubuntu (py312_x64)", os: ubuntu-latest, python-version: '3.12', architecture: x64, artifact_name: "test.py312_x64.whl.zip" }
 
     steps:
     - uses: actions/checkout@v3
